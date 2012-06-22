@@ -44,7 +44,7 @@ machine_builder = dikarunia_office.create_user( [machine_builder_role],
                   :password_confirmation => "willy1234" ) # , :office_id => dikarunia_office.id
 
 account_manager = dikarunia_office.create_user( [account_manager_role],
-                    :email => "machine_builder@gmail.com", 
+                    :email => "account_manager@gmail.com", 
                     :password => "willy1234",
                     :password_confirmation => "willy1234" ) # , :office_id => dikarunia_office.id
 
