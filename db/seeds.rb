@@ -49,22 +49,22 @@ account_manager = dikarunia_office.create_user( [account_manager_role],
                     :password_confirmation => "willy1234" ) # , :office_id => dikarunia_office.id
 
 puts "category builder"
-cooler_category = office.create_machine_category( "Cooler", machine_builder )  
-fountain_category = office.create_machine_category( "Fountain", machine_builder )
+cooler_category = MachineCategory.create_machine_category( "Cooler", machine_builder )  
+fountain_category = MachineCategory.create_machine_category( "Fountain", machine_builder )
 
 puts "machine builder"
-fountain_machine_1 = Machine.create(:model_name => "ML-150", fountain_category , machine_builder )
-cooler_machine_1 = Machine.create(:model_name => "CIC-3001", cooler_category, machine_builder )
+fountain_machine_1 = Machine.create_machine(:model_name => "ML-150", fountain_category , machine_builder )
+cooler_machine_1 = Machine.create_machine(:model_name => "CIC-3001", cooler_category, machine_builder )
 
 
 puts "component builder"
-fountain_component_1 = fountain_machine_1.create_components( "Dry Hose 25cm", machine_builder ) 
-fountain_component_2 = fountain_machine_1.create_components( "Dispenser Knob", machine_builder )
-fountain_component_3 = fountain_machine_1.create_components( "CO2 Pressure Controller", machine_builder)
+fountain_component_1 = fountain_machine_1.create_component( "Dry Hose 25cm", machine_builder ) 
+fountain_component_2 = fountain_machine_1.create_component( "Dispenser Knob", machine_builder )
+fountain_component_3 = fountain_machine_1.create_component( "CO2 Pressure Controller", machine_builder)
 
-cooler_component_1 = cooler_machine_1.create_components( "Ozonized Fan", machine_builder ) 
-cooler_component_2 = cooler_machine_1.create_components( "Temperature Controller", machine_builder )
-cooler_component_3 = cooler_machine_1.create_components( "Freon Burner", machine_builder)
+cooler_component_1 = cooler_machine_1.create_component( "Ozonized Fan", machine_builder ) 
+cooler_component_2 = cooler_machine_1.create_component( "Temperature Controller", machine_builder )
+cooler_component_3 = cooler_machine_1.create_component( "Freon Burner", machine_builder)
 
 
 puts "component - create new spare part "
@@ -81,7 +81,7 @@ compatibility_cooler_2_2 = cooler_component_2.add_new_spare_part( {:part_code =>
 
 
 puts "component - add compatibility to the existing sparepart"
-existing_spare_part_1  = SparePart.create("MKC-734", machine_builder)
+existing_spare_part_1  = SparePart.create_new_spare_part("MKC-734", machine_builder)
 compatibility_fountain_1_1.assign_existing_spare_part( existing_spare_part_1, machine_builder )
 
 puts "[PENDING] component - delete compatibility to the existing sparepart, not important for demo"

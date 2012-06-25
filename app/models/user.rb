@@ -11,4 +11,8 @@ class User < ActiveRecord::Base
   
   has_many :offices, :through => :job_attachments 
   has_many :job_attachments
+  
+  def active_job_attachment
+    self.job_attachments.where(:is_active => true).first
+  end
 end
