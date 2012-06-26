@@ -15,4 +15,9 @@ class User < ActiveRecord::Base
   def active_job_attachment
     self.job_attachments.where(:is_active => true).first
   end
+  
+  def has_role?(role_sym)
+    active_job_attachment.has_role?(role_sym)
+  end
+  
 end

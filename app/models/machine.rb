@@ -3,6 +3,7 @@ class Machine < ActiveRecord::Base
   belongs_to :machine_category 
   
   has_many :components
+  has_many :assets 
   
   def self.create_machine( machine_hash, machine_category, machine_builder )
     office = machine_builder.active_job_attachment.office
@@ -27,5 +28,20 @@ class Machine < ActiveRecord::Base
     end
     
     self.components.create(:name => component_name, :creator_id => machine_builder.id )
+  end
+  
+  def create_asset( asset_no , client,  employee  )
+    if not employee.has_role?(:account_manager)
+      return nil
+    end
+    
+    prev_asset = Asset.previous_asset(asset_no, client, self, employee )
+    if not prev_asset.nil?
+      return prev_asset
+    else 
+      return Asset.create(:asset_no => asset_no , :client_id => client.id, 
+                  :machine_id => self.id, :creator_id => employee.id )
+    end
+    
   end
 end

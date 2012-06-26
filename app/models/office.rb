@@ -21,4 +21,13 @@ class Office < ActiveRecord::Base
   end
   
   
+  def create_client( client_name  , employee)
+    if not employee.has_role?(:account_manager )
+      return nil
+    end
+    
+    self.clients.create :name => client_name , :creator_id => employee.id 
+    
+  end
+  
 end
