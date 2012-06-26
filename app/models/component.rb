@@ -1,5 +1,5 @@
 class Component < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :name, :machine_id, :creator_id 
   has_many :spare_parts, :through => :compatibilities 
   has_many :compatibilities 
   
@@ -14,19 +14,19 @@ class Component < ActiveRecord::Base
     
     office = employee.active_job_attachment.office
     
-    if  SparePart.pre_existing_in_office?(part_code, component, machine_builder) 
+    if  SparePart.pre_existing_in_office?(spare_part_hash[:part_code],   employee) 
       return nil
     end
     
-    spare_part = SparePart.create(:part_code => part_code , 
+    spare_part = SparePart.create(:part_code => spare_part_hash[:part_code] , 
                   :office_id => office.id , 
-                  :creator_id => machine_builder.id )
+                  :creator_id => employee.id )
                   
-    spare_part.create_price( spare_part_hash[:price] )
+    spare_part.create_price( spare_part_hash[:price] , employee )
                   
-    Compatibility.create(:spare_part_id => spare_part.id, :component_id => self.id)
+    return Compatibility.create(:spare_part_id => spare_part.id, :component_id => self.id)
     
-    return spare_part 
+     
   end
   
   

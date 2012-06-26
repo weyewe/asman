@@ -11,13 +11,60 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120622131503) do
+ActiveRecord::Schema.define(:version => 20120626062205) do
+
+  create_table "assets", :force => true do |t|
+    t.string   "asset_no"
+    t.integer  "creator_id"
+    t.integer  "client_id"
+    t.integer  "machine_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
     t.integer  "job_attachment_id"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "name"
+    t.string   "contact_person"
+    t.string   "phone_number"
+    t.string   "blackberry_pin"
+    t.string   "email"
+    t.string   "address"
+    t.integer  "creator_id"
+    t.integer  "office_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "compatibilities", :force => true do |t|
+    t.integer  "spare_part_id"
+    t.integer  "component_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "component_statuses", :force => true do |t|
+    t.integer  "maintenance_id"
+    t.integer  "component_id"
+    t.boolean  "status"
+    t.text     "description"
+    t.integer  "creator_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "components", :force => true do |t|
+    t.string   "name"
+    t.integer  "machine_id"
+    t.integer  "creator_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "job_attachments", :force => true do |t|
@@ -28,14 +75,62 @@ ActiveRecord::Schema.define(:version => 20120622131503) do
     t.datetime "updated_at",                    :null => false
   end
 
+  create_table "machine_categories", :force => true do |t|
+    t.string   "name"
+    t.integer  "office_id"
+    t.integer  "creator_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "machines", :force => true do |t|
+    t.string   "model_name"
+    t.integer  "machine_category_id"
+    t.integer  "office_id"
+    t.integer  "creator_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "maintenances", :force => true do |t|
+    t.string   "work_order_no"
+    t.integer  "creator_id"
+    t.integer  "asset_id"
+    t.boolean  "is_finalized",        :default => false
+    t.integer  "finalizer_id"
+    t.text     "invoice_url"
+    t.boolean  "is_paid",             :default => false
+    t.integer  "payment_approver_id"
+    t.text     "payment_receipt_url"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+  end
+
   create_table "offices", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  create_table "prices", :force => true do |t|
+    t.decimal  "amount",        :precision => 11, :scale => 2, :default => 0.0
+    t.integer  "creator_id"
+    t.integer  "spare_part_id"
+    t.boolean  "is_active"
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "spare_parts", :force => true do |t|
+    t.string   "part_code"
+    t.integer  "office_id"
+    t.integer  "creator_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

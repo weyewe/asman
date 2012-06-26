@@ -9,11 +9,11 @@ class Assignment < ActiveRecord::Base
   def Assignment.create_role_assignment_if_not_exists( role,  user )
     assignments_count = Assignment.find(:all, :conditions => {
       :role_id => role.id,
-      :job_attachment_id =>user.get_active_job_attachment.id 
+      :job_attachment_id =>user.active_job_attachment.id 
     }).count
     
     if assignments_count == 0 
-      Assignment.create(:job_attachment_id => user.get_active_job_attachment.id , :role_id => role.id)
+      Assignment.create(:job_attachment_id => user.active_job_attachment.id , :role_id => role.id)
     end
   end
 end

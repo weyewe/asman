@@ -1,5 +1,5 @@
 class ComponentStatus < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :maintenance_id , :component_id 
   belongs_to :maintenance
   belongs_to :component
   

@@ -1,7 +1,8 @@
 class Price < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :amount, :creator_id , :spare_part_id 
   
   after_create :toggle_active_price
+  belongs_to :spare_part 
   
   
   def toggle_active_price

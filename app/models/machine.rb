@@ -1,9 +1,11 @@
 class Machine < ActiveRecord::Base
   attr_accessible :model_name 
   belongs_to :machine_category 
+  belongs_to :office
   
   has_many :components
   has_many :assets 
+  
   
   def self.create_machine( machine_hash, machine_category, machine_builder )
     office = machine_builder.active_job_attachment.office

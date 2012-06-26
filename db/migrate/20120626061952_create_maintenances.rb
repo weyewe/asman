@@ -1,7 +1,7 @@
 class CreateMaintenances < ActiveRecord::Migration
   def change
     create_table :maintenances do |t|
-      t.string :work_order 
+      t.string :work_order_no
       t.integer :creator_id 
       t.integer :asset_id 
       

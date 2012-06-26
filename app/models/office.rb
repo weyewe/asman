@@ -1,7 +1,9 @@
 class Office < ActiveRecord::Base
   attr_accessible :name
   has_many :machine_categories 
+  has_many :machines
   has_many :spare_parts
+  has_many :clients
   
   def create_user(role_list, user_hash)
     new_user = User.new(user_hash)

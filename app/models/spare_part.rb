@@ -7,7 +7,7 @@ class SparePart < ActiveRecord::Base
   
   
   def self.create_new_spare_part( data_hash , machine_builder )
-    if  SparePart.pre_existing_in_office?(data_hash[:part_code], component, machine_builder) 
+    if  SparePart.pre_existing_in_office?(data_hash[:part_code],  machine_builder) 
       return nil
     end
     
@@ -31,24 +31,24 @@ class SparePart < ActiveRecord::Base
   end
   
   
-  def SparePart.pre_existing_in_office?(part_code, component, machine_builder) 
+  def SparePart.pre_existing_in_office?(part_code, machine_builder) 
     office = machine_builder.active_job_attachment.office
     office.spare_parts.where(:part_code => part_code  ).count != 0 
   end
   
-  def create_price(price) 
+  def create_price(price, employee ) 
     if price.nil?
       return nil
     end
     price_amount = BigDecimal(price )
     
-    self.prices.create(:amount => price_amount)
+    self.prices.create(:amount => price_amount, :creator_id => employee.id )
   end
   
-  def change_price(price)
+  def change_price(price , employee )
     if price.nil?
       return nil
     end
-    self.prices.create( :amount => BigDecimal( price ) )
+    self.prices.create( :amount => BigDecimal( price ), :creator_id => employee.id )
   end
 end

@@ -1,5 +1,5 @@
 class Maintenance < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :work_order_no, :asset_id , :creator_id 
   has_many :component_statuses 
   belongs_to :asset 
   after_create :create_component_statuses
