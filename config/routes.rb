@@ -9,6 +9,8 @@ Asman::Application.routes.draw do
     resources :machines
   end
   
+  resources :component_categories 
+  
   resources :machines do 
     resources :components 
   end

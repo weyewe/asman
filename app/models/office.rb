@@ -4,6 +4,7 @@ class Office < ActiveRecord::Base
   has_many :machines
   has_many :spare_parts
   has_many :clients
+  has_many :component_categories 
   
   def create_user(role_list, user_hash)
     new_user = User.new(user_hash)
@@ -29,7 +30,16 @@ class Office < ActiveRecord::Base
     end
     
     self.clients.create :name => client_name , :creator_id => employee.id 
-    
+  end
+  
+  def all_component_categories
+    component_categories  = self.component_categories
+    result = []
+    component_categories.each do |component_category|
+          result << [ "#{component_category.name}" , 
+                          component_category.id ]
+    end
+    return result
   end
   
 end

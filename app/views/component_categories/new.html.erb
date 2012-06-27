@@ -1,9 +1,8 @@
 
 <div class="span9 content">
-  <%= create_guide("Create Component", 
+  <%= create_guide("Component Categories", 
         "Office: <b>#{current_office.name}</b>" + "<br />"    +  
-        "Machine Category: <b>#{@machine.machine_category.name}</b>" + "<br />"    +  
-        "Machine: <b>#{@machine.model_name}</b> "      ).html_safe %>
+        "Total Component Categories: <b>#{current_office.component_categories.count}</b> "      ).html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
   <% if flash[:notice] %>
@@ -24,23 +23,22 @@
   <div class="row-fluid">
     <div class="span12">
       
-      <h2>New Component</h2><br />
+      <h2>New Component Category</h2><br />
 
-      <%= simple_form_for([@machine, @new_component], :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
+      <%= simple_form_for(@new_component_category, :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
         
         
-        <%= f.input :component_category_id, :hint => "Select Component Category", :label => "Component Category" do %>
-           <%= f.select :component_category_id, 
-               current_office.all_component_categories %>
-         <% end %>
          
          
         <%= f.input :name , :input_html => {:class => "input-xlarge span5"}, 
-         :label => "Component" %>
+         :label => "Category Name" %>
+         
+         
+       
 
 
         <div class="form-actions">
-          <%= f.button :submit , :class => "btn btn-primary", :text=> "Create Component" %>
+          <%= f.button :submit , :class => "btn btn-primary", :text=> "Create Component Category" %>
         </div>
       <% end %>
       
@@ -56,23 +54,25 @@
    <hr />
   <div class="row-fluid">
     <div id="data_list">
-      <h2>Total Components in  <%= @machine.model_name %>: <%= @machine.components.count  %> </h2>
+      <h2>Total Component Categories in  <%= current_office.name %>: <%= current_office.component_categories.count %> </h2>
       
       
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th>Component</th>
+            <th>Component Category</th>
+            <th>Total Component</th>
             <th>Total Spare Part</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <% @machine.components.each do |component| %>
+          <% current_office.component_categories.each do |component_category| %>
             <tr>
-              <td><%= component.name  %></td>
-              <td><%= component.spare_parts.count %></td>
+              <td><%= component_category.name  %></td>
+              <td><%= component_category.components.count %></td>
+              <td><%= component_category.spare_parts.count %></td>
               <td><button href="#" class="btn">Delete</button></td>
             </tr>
           <% end %>

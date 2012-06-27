@@ -5,6 +5,7 @@ class CreateComponents < ActiveRecord::Migration
       t.integer :machine_id 
       t.integer :creator_id 
 
+      t.integer :component_category_id
       t.timestamps
     end
   end

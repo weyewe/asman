@@ -33,13 +33,25 @@ class Machine < ActiveRecord::Base
     return machine 
   end
   
-  def create_component( component_name , employee ) 
-    if employee.nil? or not employee.has_role?(:machine_builder)
+  def create_component( component_name , employee , component_category ) 
+    if employee.nil? or not employee.has_role?(:machine_builder) or  component_category.nil? 
+      return nil
+    end
+    
+    if component_name.nil? or component_name.length == 0
       return nil
     end
     
     
-    self.components.create(:name => component_name, :creator_id => employee.id )
+    past_component = self.components.where(:name => component_name.upcase ).first
+    if not past_component.nil?
+      return past_component
+    end
+    
+    self.components.create(:name => component_name.upcase, 
+      :creator_id => employee.id , 
+      :component_category_id => component_category.id)
+    
   end
   
   def create_asset( asset_no , client,  employee  )

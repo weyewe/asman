@@ -1,13 +1,18 @@
 class SparePart < ActiveRecord::Base
-  attr_accessible :component_id , :part_code , :office_id , :creator_id 
+  attr_accessible :component_id , :part_code , :office_id , :creator_id , :component_category_id
   has_many :compatibilities 
   has_many :components, :through => :compatibilities 
+  belongs_to :component_category 
   
   has_many :prices 
   
   
-  def self.create_new_spare_part( data_hash , machine_builder )
+  def self.create_new_spare_part( data_hash , machine_builder , component_category )
     if  SparePart.pre_existing_in_office?(data_hash[:part_code],  machine_builder) 
+      return nil
+    end
+    
+    if component_category.nil?
       return nil
     end
     
@@ -19,7 +24,8 @@ class SparePart < ActiveRecord::Base
     
     spare_part = SparePart.create(:part_code => data_hash[:part_code] , 
                   :office_id => office.id , 
-                  :creator_id => machine_builder.id )
+                  :creator_id => machine_builder.id ,
+                  :component_category_id => component_category.id )
     if data_hash[:price].nil?
       spare_part.prices.create(:amount =>  BigDecimal( "0" ))
     else

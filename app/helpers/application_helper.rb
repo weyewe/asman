@@ -243,15 +243,15 @@ module ApplicationHelper
       },
       {
         :title => "Create Component Category",
-        :destination_link => 'select_machine_to_create_component_url',
+        :destination_link => 'new_component_category_url',
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'component_categories',
+            :action => 'new'
           },
           {
-            :controller => "",
-            :action => ''
+            :controller => "component_categories",
+            :action => 'create'
           }
         ]
       },
@@ -266,6 +266,10 @@ module ApplicationHelper
           {
             :controller => "components",
             :action => 'new'
+          },
+          {
+            :controller => 'components',
+            :action => 'create'
           }
         ]
       },

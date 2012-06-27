@@ -1,7 +1,8 @@
 class Component < ActiveRecord::Base
-  attr_accessible :name, :machine_id, :creator_id 
+  attr_accessible :name, :machine_id, :creator_id , :component_category_id 
   has_many :spare_parts, :through => :compatibilities 
   has_many :compatibilities 
+  belongs_to :component_category
   
   # in the maintenance
   has_many :component_statuses 
@@ -20,7 +21,8 @@ class Component < ActiveRecord::Base
     
     spare_part = SparePart.create(:part_code => spare_part_hash[:part_code] , 
                   :office_id => office.id , 
-                  :creator_id => employee.id )
+                  :creator_id => employee.id ,
+                  :component_category_id => self.component_category_id )
                   
     spare_part.create_price( spare_part_hash[:price] , employee )
                   
@@ -43,8 +45,15 @@ class Component < ActiveRecord::Base
     if not employee.has_role?(:machine_builder)
       return nil
     end
+    
+    
     past_existing_spare_part= self.spare_parts.where(:id => existing_spare_part.id ).first 
+    
     if not past_existing_spare_part.nil?
+      if past_existing_spare_part.component_category_id != self.component_category_id 
+        return nil
+      end
+      
       if not self.has_compatibility?(past_existing_spare_part )
         self.create_compatibility( past_existing_spare_part )
       end

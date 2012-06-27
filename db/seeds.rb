@@ -53,18 +53,24 @@ cooler_category = MachineCategory.create_machine_category( "Cooler", machine_bui
 fountain_category = MachineCategory.create_machine_category( "Fountain", machine_builder )
 
 puts "machine builder"
-fountain_machine_1 = Machine.create_machine({:model_name => "ML-150" }, fountain_category , machine_builder )
-cooler_machine_1 = Machine.create_machine({:model_name => "CIC-3001"}, cooler_category, machine_builder )
+fountain_machine_1 = Machine.create_machine(  "ML-150" , fountain_category , machine_builder )
+cooler_machine_1 = Machine.create_machine(  "CIC-3001" , cooler_category, machine_builder )
 
+puts "component category builder"
+hose_comp_category  = ComponentCategory.create_component_category( "Hose", machine_builder)
+dispenser_knob_comp_category = ComponentCategory.create_component_category( "Dispenser Knob", machine_builder)
+controller_comp_category  = ComponentCategory.create_component_category("Controller", machine_builder)
+fan_comp_category  = ComponentCategory.create_component_category("Fan", machine_builder)
+burner_comp_category  = ComponentCategory.create_component_category("Burner", machine_builder)
 
 puts "component builder"
-fountain_component_1 = fountain_machine_1.create_component( "Dry Hose 25cm", machine_builder ) 
-fountain_component_2 = fountain_machine_1.create_component( "Dispenser Knob", machine_builder )
-fountain_component_3 = fountain_machine_1.create_component( "CO2 Pressure Controller", machine_builder)
+fountain_component_1 = fountain_machine_1.create_component( "Dry Hose 25cm", machine_builder , hose_comp_category) 
+fountain_component_2 = fountain_machine_1.create_component( "Dispenser Knob", machine_builder, dispenser_knob_comp_category )
+fountain_component_3 = fountain_machine_1.create_component( "CO2 Pressure Controller", machine_builder, controller_comp_category)
 
-cooler_component_1 = cooler_machine_1.create_component( "Ozonized Fan", machine_builder ) 
-cooler_component_2 = cooler_machine_1.create_component( "Temperature Controller", machine_builder )
-cooler_component_3 = cooler_machine_1.create_component( "Freon Burner", machine_builder)
+cooler_component_1 = cooler_machine_1.create_component( "Ozonized Fan", machine_builder, fan_comp_category ) 
+cooler_component_2 = cooler_machine_1.create_component( "Temperature Controller", machine_builder, controller_comp_category )
+cooler_component_3 = cooler_machine_1.create_component( "Freon Burner", machine_builder, burner_comp_category)
 
 
 puts "component - create new spare part "
@@ -81,7 +87,7 @@ compatibility_cooler_2_2 =     cooler_component_2.add_new_spare_part( {:part_cod
 
 
 puts "component - add compatibility to the existing sparepart"
-existing_spare_part_1  = SparePart.create_new_spare_part({:part_code =>"MKC-38881" , :price => '9.5' }, machine_builder)
+existing_spare_part_1  = SparePart.create_new_spare_part({:part_code =>"MKC-38881" , :price => '9.5' }, machine_builder,  hose_comp_category)
 if existing_spare_part_1.nil?
   puts "the spare_part_1 is nil"
 else
