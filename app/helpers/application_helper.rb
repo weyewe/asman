@@ -218,28 +218,54 @@ module ApplicationHelper
             :action => 'new'
           },
           {
-            :controller => '',
-            :action => ''
+            :controller => 'machine_categories',
+            :action => 'create'
           }
         ]
       },
       {
         :title => "Create Machine",
-        :destination_link => "root_url",
+        :destination_link => "select_machine_category_to_create_machine_url",
+        :conditions => [
+          {
+            :controller => 'machine_categories',
+            :action => 'select_machine_category_to_create_machine'
+          },
+          {
+            :controller => "machines",
+            :action => "new"
+          },
+          {
+            :controller => "machines",
+            :action => 'create'
+          }
+        ]
+      },
+      {
+        :title => "Create Component Category",
+        :destination_link => 'select_machine_to_create_component_url',
         :conditions => [
           {
             :controller => '',
+            :action => ''
+          },
+          {
+            :controller => "",
             :action => ''
           }
         ]
       },
       {
         :title => "Create Components",
-        :destination_link => 'root_url',
+        :destination_link => 'select_machine_to_create_component_url',
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'machines',
+            :action => 'select_machine_to_create_component'
+          },
+          {
+            :controller => "components",
+            :action => 'new'
           }
         ]
       },

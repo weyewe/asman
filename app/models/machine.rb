@@ -7,29 +7,39 @@ class Machine < ActiveRecord::Base
   has_many :assets 
   
   
-  def self.create_machine( machine_hash, machine_category, machine_builder )
-    office = machine_builder.active_job_attachment.office
+  def self.create_machine( params_model_name, machine_category, employee )
+    if employee.nil? or not employee.has_role?(:machine_builder)
+      return nil
+    end
     
+    if params_model_name.nil? or  params_model_name.length == 0 
+      return nil
+    end
+    
+    office = employee.active_job_attachment.office
+    
+    model_name = params_model_name.upcase
     # must be uniq in the office
-    if office.machines.where(:model_name => machine_hash[:model_name]).count != 0
+    if office.machines.where(:model_name => model_name ).count != 0
       return nil
     end
     
     
-    machine = Machine.create machine_hash 
+    machine = Machine.new(:model_name => model_name ) 
     machine.machine_category_id = machine_category.id 
-    machine.creator_id = machine_builder.id 
+    machine.creator_id = employee.id 
     machine.office_id = office.id 
     machine.save
     return machine 
   end
   
-  def create_component( component_name , machine_builder ) 
-    if machine_builder.nil?
+  def create_component( component_name , employee ) 
+    if employee.nil? or not employee.has_role?(:machine_builder)
       return nil
     end
     
-    self.components.create(:name => component_name, :creator_id => machine_builder.id )
+    
+    self.components.create(:name => component_name, :creator_id => employee.id )
   end
   
   def create_asset( asset_no , client,  employee  )
