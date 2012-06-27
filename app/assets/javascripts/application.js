@@ -11,4 +11,5 @@
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker-update
 //= require jquery.showLoading.min
+//= require utility
 //= require script

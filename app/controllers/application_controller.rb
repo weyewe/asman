@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   layout :layout_by_resource
-
+  helper_method :current_office 
+  
   def layout_by_resource
     if devise_controller? && resource_name == :user && action_name == 'new'
       "devise"
@@ -13,12 +14,33 @@ class ApplicationController < ActionController::Base
   end
   
   def current_office
-    if current_user.nil?
-      return nil
+    if @office.nil?
+      if current_user.nil?
+        return nil
+      end
+    
+      @office = current_user.active_job_attachment.office
     end
     
-    current_user.active_job_attachment.office
+    return @office
   end
+  
+  
+  def after_sign_in_path_for(resource)
+    active_job_attachment  = current_user.active_job_attachment 
+    if current_user.has_role?( :manager, active_job_attachment)
+      puts "user has role branch_manager!\n"*10
+      return new_group_loan_product_url
+    end
+    
+    if current_user.has_role?(:machine_builder, active_job_attachment)
+      puts "user has role loan_officer!\n"*10
+      return new_machine_category_url  
+    end
+   
+    
+  end
+  
   
   def set_breadcrumb_for object, destination_path, opening_words
     # puts "THIS IS WILLLLLY\n"*10

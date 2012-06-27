@@ -2,29 +2,29 @@
    <div class="well sidebar-nav">
      
 
-      <% if current_user.has_role?(:branch_manager, current_user.active_job_attachment) %>
-        <%= get_process_nav( :branch_manager , params ).html_safe %> 
+      <% if current_user.has_role?(:manager) %>
+        <%= get_process_nav( :manager , params ).html_safe %> 
       <% end %>
       
-      <% if current_user.has_role?(:loan_officer, current_user.active_job_attachment) %>
-        <%= get_process_nav( :loan_officer , params ).html_safe %> 
-        <%= get_process_nav( :group_management , params ).html_safe %> 
-        
-        <%= get_process_nav( :group_employee_management , params ).html_safe %> 
+      <% if current_user.has_role?(:machine_builder) %>
+        <%= get_process_nav( :machine_builder , params ).html_safe %> 
       <% end %>
       
-      <% if current_user.has_role?(:cashier, current_user.active_job_attachment) %>
+      <% if current_user.has_role?(:account_manager ) %>
+        <%= get_process_nav( :account_manager , params ).html_safe %> 
+      <% end %>
+      
+      <% if current_user.has_role?(:cashier) %>
         <%= get_process_nav( :cashier , params ).html_safe %> 
-        <%= get_process_nav( :savings , params ).html_safe %> 
       <% end %>
       
-      <% if current_user.has_role?(:field_worker, current_user.active_job_attachment) %>
-        <%= get_process_nav( :field_worker , params ).html_safe %> 
+      <% if current_user.has_role?(:data_entry) %>
+        <%= get_process_nav( :data_entry , params ).html_safe %> 
       <% end %>
        
        
-      <% if not current_user.has_role?(:field_worker, current_user.active_job_attachment) %>
-        <%= get_process_nav( :loan_inspector , params ).html_safe %> 
+      <% if  current_user.has_role?(:technician) %>
+        <%= get_process_nav( :technician , params ).html_safe %> 
       <% end %>
    </div><!--/.well -->
  </div><!--/span-->
