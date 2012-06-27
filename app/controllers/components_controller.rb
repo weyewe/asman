@@ -22,4 +22,13 @@ class ComponentsController < ApplicationController
       render :file => "components/new"
     end
   end
+  
+=begin
+  Creating spare part
+=end
+  def select_component_to_create_and_assign_spare_part
+    @machine = Machine.find_by_id params[:machine_id]
+    @components = @machine.components 
+    render :file => 'components/spare_parts/select_component_to_create_and_assign_spare_part'
+  end
 end

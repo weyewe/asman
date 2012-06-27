@@ -37,6 +37,11 @@ class ApplicationController < ActionController::Base
       puts "user has role loan_officer!\n"*10
       return new_machine_category_url  
     end
+    
+    if current_user.has_role?(:account_manager )
+      puts "user has role loan_officer!\n"*10
+      return new_client_url  
+    end
    
     
   end

@@ -6,6 +6,7 @@ class Component < ActiveRecord::Base
   
   # in the maintenance
   has_many :component_statuses 
+  belongs_to :machine
   
   # add_new_spare_part( {:part_code =>"MKC-3001", :price => 50 }, machine_builder )
   def add_new_spare_part(  spare_part_hash , employee )
@@ -47,10 +48,11 @@ class Component < ActiveRecord::Base
     end
     
     
-    past_existing_spare_part= self.spare_parts.where(:id => existing_spare_part.id ).first 
+    past_existing_spare_part= SparePart.find_by_id(existing_spare_part.id)
     
     if not past_existing_spare_part.nil?
       if past_existing_spare_part.component_category_id != self.component_category_id 
+        puts "There is past existing spare_part"
         return nil
       end
       
@@ -60,7 +62,20 @@ class Component < ActiveRecord::Base
       
       return past_existing_spare_part
     else
+      puts "not NIL"
       return nil
+    end
+  end
+  
+  def remove_existing_spare_part( existing_spare_part, employee ) 
+    if not employee.has_role?(:machine_builder)
+      return nil
+    end
+    
+    compatibilities = Compatibility.where(:spare_part_id => existing_spare_part.id, :component_id => self.id)
+    
+    if not compatibilities.length == 0 
+      compatibilities.each {|x| x.destroy }
     end
   end
   
@@ -74,5 +89,10 @@ class Component < ActiveRecord::Base
     compatibilities.each do |compatibility|
       compatibility.destroy 
     end
+  end
+  
+  
+  def is_compatible_with?(spare_part)
+    Compatibility.where(:component_id => self.id , :spare_part_id => spare_part.id).count != 0
   end
 end

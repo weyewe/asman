@@ -224,7 +224,7 @@ module ApplicationHelper
         ]
       },
       {
-        :title => "Create Machine",
+        :title => "Machine",
         :destination_link => "select_machine_category_to_create_machine_url",
         :conditions => [
           {
@@ -242,7 +242,7 @@ module ApplicationHelper
         ]
       },
       {
-        :title => "Create Component Category",
+        :title => "Component Category",
         :destination_link => 'new_component_category_url',
         :conditions => [
           {
@@ -256,7 +256,7 @@ module ApplicationHelper
         ]
       },
       {
-        :title => "Create Components",
+        :title => "Components",
         :destination_link => 'select_machine_to_create_component_url',
         :conditions => [
           {
@@ -274,25 +274,33 @@ module ApplicationHelper
         ]
       },
       {
-        :title => "Create Spare Part",
-        :destination_link => "root_url",
+        :title => "Create + Assign Spare Part",
+        :destination_link => "select_machine_to_create_and_assign_spare_part_url",
         :conditions => [
           {
-            :controller => '',
-            :action => ''
-          }
-        ]
-      },
-      {
-        :title => "Create Compatibility",
-        :destination_link => 'root_url',
-        :conditions => [
+            :controller => 'machines',
+            :action => 'select_machine_to_create_and_assign_spare_part'
+          },
           {
-            :controller => '',
-            :action => ''
+            :controller => "components", 
+            :action => "select_component_to_create_and_assign_spare_part"
+          },
+          {
+            :controller => "spare_parts",
+            :action => "new"
           }
         ]
-      }
+      }# ,
+      #       {
+      #         :title => "Compatibility",
+      #         :destination_link => 'root_url',
+      #         :conditions => [
+      #           {
+      #             :controller => '',
+      #             :action => ''
+      #           }
+      #         ]
+      #       }
     ]
   }
   
@@ -300,8 +308,22 @@ module ApplicationHelper
     :header_title => "Machine Builder",
     :processes => [
       {
-        :title => "Machine Category",
-        :destination_link => "root_url",
+        :title => "Create Client",
+        :destination_link => "new_client_url",
+        :conditions => [
+          {
+            :controller => 'clients',
+            :action => 'new'
+          },
+          {
+            :controller => 'clients',
+            :action => 'create'
+          }
+        ]
+      },
+      {
+        :title => "Register  Asset",
+        :destination_link => "new_client_url",
         :conditions => [
           {
             :controller => '',

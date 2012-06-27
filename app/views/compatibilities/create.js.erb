@@ -1,0 +1,9 @@
+$(document).ready(function(){
+
+  <% new_row = escape_javascript(  render :partial => "spare_parts/compatibility_entry", :locals => {
+            :spare_part => @spare_part,
+            :component => @component
+          }) %>
+          
+  $("#spare_part_compatibility_assignment-<%= @spare_part.id %>").replaceWith('<%= new_row %>');
+});

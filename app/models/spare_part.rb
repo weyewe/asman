@@ -57,4 +57,8 @@ class SparePart < ActiveRecord::Base
     end
     self.prices.create( :amount => BigDecimal( price ), :creator_id => employee.id )
   end
+  
+  def active_price
+    self.prices.where(:is_active => true ).first
+  end
 end

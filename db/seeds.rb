@@ -94,6 +94,7 @@ else
   puts "it is not nil"
 end
 fountain_component_1.assign_existing_spare_part( existing_spare_part_1, machine_builder )
+fountain_component_1.remove_existing_spare_part( existing_spare_part_1, machine_builder )
 
 puts "[PENDING] component - delete compatibility to the existing sparepart, not important for demo"
 spare_part_fountain_1_1 = compatibility_fountain_1_1.spare_part

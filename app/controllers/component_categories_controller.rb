@@ -17,4 +17,9 @@ class ComponentCategoriesController < ApplicationController
       render :file => "component_categories/new"
     end
   end
+  
+  def select_component_category_to_create_spare_part
+    @component_categories = current_office.component_categories 
+    render :file => "component_categories/spare_parts/select_component_category_to_create_spare_part"
+  end
 end

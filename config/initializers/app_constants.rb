@@ -6,3 +6,12 @@ USER_ROLE = {
   :account_manager => "AccountManager",
   :cashier => "Cashier"
 }
+
+=begin
+  CONSTANT for AJAX
+=end
+TRUE_CHECK = 1
+FALSE_CHECK = 0
+
+PROPOSER_ROLE = 0 
+APPROVER_ROLE = 1

@@ -32,6 +32,15 @@ class MachinesController < ApplicationController
     
     render :file => "machines/components/select_machine_to_create_component"
   end
+  
+  
+=begin
+  CREATING AND ASSIGNING SPARE_PART to MACHINE COMPONENT
+=end
+  def select_machine_to_create_and_assign_spare_part
+    @machines = current_office.machines 
+    render :file => "machines/spare_parts/select_machine_to_create_and_assign_spare_part"
+  end
 end
 
 

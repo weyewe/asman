@@ -1,0 +1,23 @@
+<tr id="spare_part_compatibility_assignment-<%= spare_part.id %>">
+  <td><%= spare_part.part_code  %></td>
+  <td><%= print_money( spare_part.active_price.amount ) %></td>
+  <td>
+    <% if component.is_compatible_with?(spare_part) %>
+      <span class="label label-success">Yes</span>
+    <% else %>
+      <span class="label label-important">No</span>
+    <% end %>
+    
+  </td>
+  <td class="well">
+    <label class="checkbox">
+      <% checkbox_value = component.is_compatible_with?(spare_part) %>
+
+      <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+          checkbox_value, :class => 'checkbox_tracker', 
+          :id => "provider_#{component.id}-consumer_#{spare_part.id}" %> Compatible
+    </label>
+  </td>
+  <td>Edit</td>
+  <td>Delete</td>
+</tr>

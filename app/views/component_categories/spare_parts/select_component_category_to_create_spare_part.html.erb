@@ -1,8 +1,8 @@
 
 <div class="span9 content">
-  <%= create_guide("Create Machine", 
+  <%= create_guide("Create Spare Part", 
         "Office: <b>#{current_office.name}</b>" + "<br />"    +  
-        "Total Machine Categories: <b>#{current_office.machine_categories.count}</b>"      ).html_safe %>
+        "Total Component Categories: <b>#{@component_categories.count}</b>"      ).html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
  
@@ -13,17 +13,17 @@
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th>Kategori</th>
-            <th>Total Mesin</th>
-            <th>Total Asset</th>
+            <th>Component Category</th>
+            <th>Total Component</th>
+            <th>Total Spare Part</th>
           </tr>
         </thead>
         <tbody>
-          <% @machine_categories.each do |machine_category| %>
+          <% @component_categories.each do |component_category| %>
             <tr>
-              <td><%= link_to machine_category.name, new_machine_category_machine_url(machine_category)  %></td>
-              <td><%= machine_category.machines.count %></td>
-              <td><%= machine_category.assets.count %></td>
+              <td><%=  component_category.name   %></td>
+              <td><%= component_category.components.count %></td>
+              <td><%= component_category.spare_parts.count %></td>
             </tr>
           <% end %>
 
