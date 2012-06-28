@@ -59,11 +59,15 @@ class Machine < ActiveRecord::Base
       return nil
     end
     
-    prev_asset = Asset.previous_asset(asset_no, client, self, employee )
+    if asset_no.nil? or asset_no.length == 0 
+      return nil
+    end
+    
+    prev_asset = Asset.previous_asset(asset_no.upcase, client, self, employee )
     if not prev_asset.nil?
       return prev_asset
     else 
-      return Asset.create(:asset_no => asset_no , :client_id => client.id, 
+      return Asset.create(:asset_no => asset_no.upcase , :client_id => client.id, 
                   :machine_id => self.id, :creator_id => employee.id )
     end
     

@@ -18,6 +18,6 @@ class Asset < ActiveRecord::Base
   end
   
   def self.previous_asset(asset_no, client, machine, employee )
-    Asset.where(:asset_no => asset_no, :client_id => client.id, :machine_id => machine.id, :creator_id => employee.id ).first 
+    Asset.where(:asset_no => asset_no, :client_id => client.id,  :creator_id => employee.id ).first 
   end
 end

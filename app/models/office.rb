@@ -24,12 +24,14 @@ class Office < ActiveRecord::Base
   end
   
   
-  def create_client( client_name  , employee)
+  def create_client( client_hash  , employee)
     if not employee.has_role?(:account_manager )
       return nil
     end
     
-    self.clients.create :name => client_name , :creator_id => employee.id 
+    self.clients.create( :name => client_hash[:name] , 
+                :contact_person=> client_hash[:contact_person], 
+                :creator_id => employee.id)
   end
   
   def all_component_categories
@@ -38,6 +40,16 @@ class Office < ActiveRecord::Base
     component_categories.each do |component_category|
           result << [ "#{component_category.name}" , 
                           component_category.id ]
+    end
+    return result
+  end
+  
+  def all_machines
+    machines  = self.machines
+    result = []
+    machines.each do |machine|
+          result << [ "#{machine.machine_category.name} (  Model: #{machine.model_name}  )" , 
+                          machine.id ]
     end
     return result
   end

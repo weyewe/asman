@@ -109,7 +109,7 @@ puts "Asset: machine + Asset Number + client_id. We need some sort of client bui
 puts "\n**************BUSINESS SETUP**************\n"
 
 puts "Create client"
-client_1 = dikarunia_office.create_client( "McDonald Cilincing" , account_manager)
+client_1 = dikarunia_office.create_client( {:name => "McDonald Cilincing", :contact_person => "Roy Roy"} , account_manager)
 
 puts "Create Asset"
 asset_1 = cooler_machine_1.create_asset(  "AXA2342", client_1 , account_manager)

@@ -42,4 +42,6 @@ Asman::Application.routes.draw do
   end
   
   resources :assets 
+  
+  match 'select_client_to_create_asset' => 'clients#select_client_to_create_asset', :as => :select_client_to_create_asset
 end

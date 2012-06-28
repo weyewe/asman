@@ -323,15 +323,19 @@ module ApplicationHelper
       },
       {
         :title => "Register  Asset",
-        :destination_link => "new_client_url",
+        :destination_link => "select_client_to_create_asset_url",
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'clients',
+            :action => 'select_client_to_create_asset'
           },
           {
-            :controller => '',
-            :action => ''
+            :controller => 'assets',
+            :action => 'new'
+          },
+          {
+            :controller => "assets",
+            :action => "create"
           }
         ]
       }
