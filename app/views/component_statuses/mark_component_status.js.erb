@@ -1,0 +1,9 @@
+$(document).ready(function(){
+
+  <% new_row = escape_javascript(  render :partial => "maintenances/component_statuses/component_status_entry", :locals => {
+            :maintenance => @maintenance,
+            :component_status => @component_status
+          }) %>
+          
+  $("#component_status_entry-<%= @component_status.id %>").replaceWith('<%= new_row %>');
+});

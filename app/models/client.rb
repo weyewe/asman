@@ -14,4 +14,9 @@ class Client < ActiveRecord::Base
   has_many :maintenances 
   has_many :assets 
   
+  def asset_id_list
+    self.assets.map{|x| x.id }
+  end
+  
+  
 end

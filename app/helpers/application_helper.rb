@@ -338,6 +338,28 @@ module ApplicationHelper
             :action => "create"
           }
         ]
+      },
+      {
+        :title => "Create Maintenance",
+        :destination_link => 'select_client_to_create_maintenance_url',
+        :conditions => [
+          {
+            :controller => 'clients',
+            :action => 'select_client_to_create_maintenance'
+          },
+          {
+            :controller => "assets",
+            :action => 'select_asset_to_create_maintenance'
+          },
+          {
+            :controller => 'maintenances',
+            :action => 'new_maintenance_for_asset'
+          },
+          {
+            :controller => 'maintenances',
+            :action => 'create_maintenance_for_asset'
+          }
+        ]
       }
     ]
   }
@@ -363,19 +385,19 @@ module ApplicationHelper
   }
   
   DATA_ENTRY_PROCESS_LIST = {
-    :header_title => "Machine Builder",
+    :header_title => "Data Entry",
     :processes => [
       {
-        :title => "Machine Category",
-        :destination_link => "root_url",
+        :title => "Execute Maintenance",
+        :destination_link => "select_unfinalized_maintenance_to_be_done_url",
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'maintenances',
+            :action => 'select_unfinalized_maintenance_to_be_done'
           },
           {
-            :controller => '',
-            :action => ''
+            :controller => 'maintenances',
+            :action => 'component_status_data_entry_for_maintenance'
           }
         ]
       }

@@ -1,0 +1,114 @@
+
+<div class="span9 content">
+  <%= create_guide("Create Maintenance", 
+        "Office: <b>#{current_office.name}</b>" + "<br />"    +  
+        "Client: <b>#{@client.name}</b>" + "<br />"    + 
+        "Machine: <b>#{@machine.model_name}</b>" + "<br />"    + 
+        "Asset No: <b>#{@asset.asset_no }</b>" + "<br />"   +
+        "Unfinalized Past Maintenance: <b>#{@asset.unfinalized_past_maintenances.count}</b>"      ).html_safe %>
+  
+  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Well done!</strong> <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+  
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Create Failure!</strong> Please fill in all fields.<br />
+      <% flash[:error].each do |error| %>
+        <%= error.html_safe %>
+      <% end %>
+      
+    </div>
+  <% end %>
+  
+  
+  <div class="row-fluid">
+    <div class="span12">
+      
+      <h2>New Client</h2><br />
+
+      <%= simple_form_for(@new_maintenance,:url => create_maintenance_for_asset_url(@asset),  
+                :method => :post, 
+                :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
+        <!-- t.string :name
+          t.string :contact_person
+          t.string :phone_number
+          t.string :blackberry_pin
+          t.string :email 
+          t.string :address -->
+        
+        
+       
+         <%= f.input :work_order_no , :input_html => {:class => "input-xlarge span5"}, 
+          :label => "Work Order" , :hint => "Work Order No"%>
+
+         
+
+        <div class="form-actions">
+          <%= f.button :submit , :class => "btn btn-primary", :text=> "Create Maintenance" %>
+        </div>
+      <% end %>
+      
+      
+     
+      
+    </div> 
+      
+      
+      
+    
+  </div><!--/row-->
+   <hr />
+  <div class="row-fluid">
+    <div id="data_list">
+      <h2>Total Maintenances: <%= @asset.maintenances.count  %> </h2>
+      
+      
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Asset No</th>
+            <th>Work Order No</th>
+            <th>Received</th>
+            <th>Maintenance Done</th>
+            <th>Paid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @asset.maintenances.order("created_at DESC").each do |maintenance| %>
+            <tr>
+              <td><%= maintenance.asset.asset_no  %></td>
+              <td><%= maintenance.work_order_no  %></td>
+              <td><%= maintenance.created_at  %></td>
+              <td><%= maintenance.finalization_datetime  %></td>
+              <td><%= maintenance.payment_datetime  %></td>
+            </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div><!-- end of #data_list -->
+  </div>
+
+</div><!--/span-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

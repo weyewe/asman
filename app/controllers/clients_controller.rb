@@ -27,5 +27,9 @@ class ClientsController < ApplicationController
     render :file => "clients/assets/select_client_to_create_asset"
   end
   
+  def select_client_to_create_maintenance
+    render :file => "clients/maintenances/select_client_to_create_maintenance"
+  end
+  
   
 end

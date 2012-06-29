@@ -1,0 +1,95 @@
+<!-- <tr>
+  <th>Component</th>
+  <th>Status</th>
+  <th>Action</th>
+</tr> -->
+
+<tr id="component_status_entry-<%= component_status.id %>">
+  
+  <td><%= component_status.component.name %></td>
+  
+  <td>
+    <% if component_status.status.nil? %>
+      <span class="label">Pending Analysis</span>
+    <% else %>
+      <% if component_status.status == true %>
+        <span class="label label-success">Not Broken</span>
+      <% else %>
+        <% if component_status.component.spare_parts.count == 0 %>
+          	<span class="label label-important">No Spare Part. Ask Manager</span>
+        <% else %>
+          <p id="component_status_nav_wrapper-<%= component_status.id %>">
+            <% if  component_status.replacement_spare_part_id.nil? %>
+              <span class="label label-important" style="margin-right:40px;">Not Assigned</span>
+              <%= link_to "Assign Spare Part", "#", :class => "btn btn-mini btn-primary component_status_form_opener",
+                :id => "edit_component_status-#{component_status.id}" %>
+            <% else %>
+              <span class="label label-success" style="margin-right:40px;">
+                <%= component_status.replacement_spare_part.part_code %>
+              </span>
+              <%= link_to "Edit Spare Part", "#", :class => "btn btn-mini btn-primary component_status_form_opener" , 
+                    :id => "edit_component_status-#{component_status.id}" %>
+            <% end %>  <!-- End of the case where there is spare parts-->
+            
+          </p>
+          <!--  show the form -->
+          <%= simple_form_for component_status, :html => {
+                  :class => "prevent_double_submit form-horizontal update_spare_part_form",
+                  :style => "display:none;", :id => "form_component_status-#{component_status.id}"} do |f| %>
+            <%= f.input :replacement_spare_part_id, :hint => "Select Spare Part", :label => "Spare Part" do %>
+               <%= f.select :replacement_spare_part_id, 
+                   component_status.compatible_spare_parts %>
+            <% end %>
+            <div class="form-actions">
+              <%= f.button :submit , :class => "btn btn-primary", :value=> "Assign Spare Part" %>
+              <%= link_to "Cancel", '#', 
+                  :class => "btn component_status_form_closer", 
+                  :id => "form_closer-#{component_status.id}" %>
+            </div>
+          
+          <% end %> <!-- end of the form -->
+          
+        <% end %> <!-- end of the case where there is no spare parts -->
+      <% end %>
+    <% end %>
+  </td>
+  
+  <td>
+    <% if component_status.status == true  %>
+      	<span class="label label-success">OK</span>
+    <% elsif component_status.status == false %>
+      <span class="label label-important">NOT OK</span>
+    <% elsif component_status.status.nil? %>
+    <span class="label">Pending</span>
+    <% end %>
+  </td>
+  
+  
+  
+  <% if component_status.status.nil? %>
+    <td style="text-align:center;">
+      <a href="#" class="btn approve action true_check"
+          id="finalize-<%= component_status.id %>">OK</a>
+    </td>
+  
+    <td style="text-align:center;">
+      <a href="#" class="btn approve action"
+          id="reject-<%= component_status.id %>">NOT OK</a>
+    </td>
+  <% else %>
+    <td class="well"  colspan="2">
+      <label class="checkbox">
+        <% checkbox_value = component_status.status %>
+
+        <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+            checkbox_value, :class => 'checkbox_tracker', 
+            :id => "provider_#{maintenance.id}-consumer_#{component_status.id}" %> OK
+      </label>
+    </td>
+  <% end %>
+  
+  
+</tr>
+
+
+

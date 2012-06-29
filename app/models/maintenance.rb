@@ -1,12 +1,13 @@
 class Maintenance < ActiveRecord::Base
-  attr_accessible :work_order_no, :asset_id , :creator_id 
+  attr_accessible :work_order_no, :asset_id , :creator_id , :office_id
   has_many :component_statuses 
   belongs_to :asset 
   after_create :create_component_statuses
-  
-  
+  belongs_to :office
+  #  what is the logic to maintain the uniqness? 
+  # from a given client, only 1 work order no
   def self.is_uniq?(work_order_no, asset)
-    Maintenance.where(:work_order_no => work_order_no, :asset_id => asset.id ).count == 0 
+    Maintenance.where(:work_order_no => work_order_no.upcase, :asset_id => asset.id ).count == 0 
   end
   
   def create_component_statuses
@@ -27,6 +28,7 @@ class Maintenance < ActiveRecord::Base
     
     self.is_finalized = true
     self.finalizer_id = employee.id
+    self.finalization_datetime = DateTime.now 
     self.save 
     # self.delay.create_maintenance_invoice # and send email 
     return self
@@ -44,9 +46,27 @@ class Maintenance < ActiveRecord::Base
     
     self.is_paid = true
     self.payment_approver_id = employee.id
+    self.payment_datetime = DateTime.now 
     self.save   
     # self.delay.create_payment_receipt  # and send email 
     return self 
   end
+  
+  def self.all_maintenances(client)
+    Maintenance.where(  :asset_id => client.asset_id_list )
+  end
+  
+  def self.completed_maintenances(client)
+    Maintenance.where(:is_finalized => true, :asset_id => client.asset_id_list )
+  end
+  
+  def self.paid_maintenances(client)
+    Maintenance.where(:is_paid => true, :is_finalized => true, :asset_id => client.asset_id_list )
+  end
+  
+  def self.in_progress_maintenances(client)
+    Maintenance.where(:is_paid => false, :is_finalized => false, :asset_id => client.asset_id_list )
+  end
+  
   
 end

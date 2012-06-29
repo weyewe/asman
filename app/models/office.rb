@@ -5,6 +5,7 @@ class Office < ActiveRecord::Base
   has_many :spare_parts
   has_many :clients
   has_many :component_categories 
+  has_many :maintenances
   
   def create_user(role_list, user_hash)
     new_user = User.new(user_hash)
@@ -52,6 +53,12 @@ class Office < ActiveRecord::Base
                           machine.id ]
     end
     return result
+  end
+  
+ 
+  
+  def pending_execution_maintenances
+    self.maintenances.where(:is_finalized => false )
   end
   
 end

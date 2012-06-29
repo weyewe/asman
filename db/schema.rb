@@ -62,9 +62,10 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.integer  "component_id"
     t.boolean  "status"
     t.text     "description"
+    t.integer  "replacement_spare_part_id"
     t.integer  "creator_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "components", :force => true do |t|
@@ -105,14 +106,18 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.string   "work_order_no"
     t.integer  "creator_id"
     t.integer  "asset_id"
-    t.boolean  "is_finalized",        :default => false
+    t.integer  "office_id"
+    t.boolean  "is_finalized",           :default => false
     t.integer  "finalizer_id"
     t.text     "invoice_url"
-    t.boolean  "is_paid",             :default => false
+    t.datetime "finalization_datetime"
+    t.boolean  "is_paid",                :default => false
     t.integer  "payment_approver_id"
     t.text     "payment_receipt_url"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.string   "payment_receipt_number"
+    t.datetime "payment_datetime"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "offices", :force => true do |t|

@@ -23,4 +23,10 @@ class AssetsController < ApplicationController
       render :file => "assets/new"
     end
   end
+  
+  def select_asset_to_create_maintenance
+    @client = Client.find_by_id params[:client_id]
+    render :file => "assets/maintenances/select_asset_to_create_maintenance"
+    
+  end
 end

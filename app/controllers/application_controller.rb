@@ -29,18 +29,19 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     active_job_attachment  = current_user.active_job_attachment 
     if current_user.has_role?( :manager )
-      puts "user has role branch_manager!\n"*10
       return new_group_loan_product_url
     end
     
     if current_user.has_role?(:machine_builder )
-      puts "user has role loan_officer!\n"*10
       return new_machine_category_url  
     end
     
     if current_user.has_role?(:account_manager )
-      puts "user has role loan_officer!\n"*10
       return new_client_url  
+    end
+    
+    if current_user.has_role?(:data_entry )
+      return select_unfinalized_maintenance_to_be_done_url  
     end
    
     

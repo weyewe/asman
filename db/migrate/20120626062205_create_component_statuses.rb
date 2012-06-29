@@ -6,6 +6,8 @@ class CreateComponentStatuses < ActiveRecord::Migration
       t.boolean :status  # ok, not ok , 
       t.text :description 
       
+      t.integer :replacement_spare_part_id 
+      
       t.integer :creator_id 
 
       t.timestamps

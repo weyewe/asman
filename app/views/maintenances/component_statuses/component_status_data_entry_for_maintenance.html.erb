@@ -1,0 +1,90 @@
+
+<div class="span9 content">
+  <%= create_guide("Maintenance Result Data Entry", 
+        "Office: <b>#{current_office.name}</b>" + "<br />"    +  
+        "Client: <b>#{@client.name}</b>" + "<br />" +
+        "Machine: <b>#{@machine.model_name}</b>"    + "<br />"    +  
+        "Asset No: <b>#{@asset.asset_no}</b>" + "<br />" +
+        "Work Order No: <b>#{@maintenance.work_order_no}</b>" ).html_safe %>
+  
+  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+ 
+  <div class="row-fluid">
+    <div id="data_list">
+      <p>Total Components  for Machine <%= @machine.model_name %>: <b><%= @component_statuses.count %></b></p>
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th style="width:400px;">Replacement Spare Part</th>
+            <th style="width:100px;">Component Status</th>
+            <th colspan="2" style="text-align:center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @component_statuses.each do |component_status| %>
+              <%= render :partial => "maintenances/component_statuses/component_status_entry", :locals => {
+                :maintenance => @maintenance,
+                :component_status => component_status 
+              }%>
+          <% end %>
+
+        </tbody>
+      </table>
+      
+      
+      <div class="alert alert-success" style="margin-top:20px;">
+        <strong>If you are done,</strong> click the following button: <br /> 
+        <%= form_for  @maintenance, :url => finalize_maintenance_url, 
+              :method => :post, :html => {:class =>  "prevent_double_submit form-horizontal"}     do |f| %>
+          <%= hidden_field_tag 'maintenance_id' , @maintenance.id  %>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Finalize + Create Invoice</button>
+          </div>
+        <% end %>
+      </div>
+    </div><!-- end of #data_list -->
+  </div>
+
+</div><!--/span-->
+
+<div class=" hidden" id="checkbox_form_wrapper">
+  <%= form_for ComponentStatus.new, :url => mark_component_status_url, :method => :post   do |f| %>
+    <%= hidden_field_tag 'membership_provider' , ''  %>
+    <%= hidden_field_tag 'membership_consumer', '' %>
+    <%= hidden_field_tag 'membership_decision', '' %>
+  <% end %>
+</div>
+
+
+
+<div class=" hidden" id="approve_propose_form_wrapper">
+  <%= form_for ComponentStatus.new, :url => initial_component_status_marking_url   do |f| %>
+    <%= hidden_field_tag 'entity_id' , ''  %>
+    <%= hidden_field_tag 'action_role', '' %>
+    <%= hidden_field_tag 'action_value', '' %>
+  <% end %>
+</div>
+
+
+
+<div class="modal" id="myModal" style="display:none;">
+   <div class="modal-header">
+     <a class="close" data-dismiss="modal">×</a>
+     <h3>Modal header</h3>
+   </div>
+   <div class="modal-body">
+     <p>One fine body…</p>
+   </div>
+   <div class="modal-footer">
+     <a href="#" class="btn modal-closer">Close</a>
+     <!-- <a href="#" class="btn btn-primary">Save changes</a> -->
+   </div>
+ </div>
+
+
+
+
+
+
