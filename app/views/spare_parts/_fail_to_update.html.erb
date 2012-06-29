@@ -1,16 +1,38 @@
+<% error_array = [] %>
+<% if @price.nil? or @price.length == 0%>
+  <% error_array << "You have to key in the price"%>
+<% end %>
+
+<% if @part_code.nil?  or @part_code.length == 0 %>
+  <% error_array << "You have to key in the part_codes"%>
+<% end %>
+
+
+
+<% if not @price.nil? and not  Price.valid_price_string?(@price.gsub(',','')) %>
+  <% error_array << "Price #{@price} is invalid"%>
+<% end %>
+
+<% if SparePart.pre_existing_in_office?(@part_code, current_user) and @spare_part.part_code != @part_code %>
+  <% error_array << "There is existing spare_part part_code: #{@part_code}"%>
+<% end %>
+
 <div id="modal_notification">
 
 <table cellpadding="0" cellspacing="0" border="0" 
       class="table table-striped table-bordered" id="example">
   <thead>
-    <tr><th  style="text-align:center;">Update Successful</th></tr>
+    <tr><th  style="text-align:center;">Update FAIL</th></tr>
   </thead>
   <tbody>
+    
+    <% error_array.each do |x| %>
     <tr>
       <td>
-        <b>Reason</b>
+        <%= x.html_safe %>
       </td>
     </tr>
+    <% end %>
     
   
   </tbody>
