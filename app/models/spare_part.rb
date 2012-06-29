@@ -39,7 +39,7 @@ class SparePart < ActiveRecord::Base
   
   def SparePart.pre_existing_in_office?(part_code, machine_builder) 
     office = machine_builder.active_job_attachment.office
-    office.spare_parts.where(:part_code => part_code  ).count != 0 
+    office.active_spare_parts.where(:part_code => part_code, :is_active => true   ).count != 0 
   end
   
   #price amount is in BigDecimal 

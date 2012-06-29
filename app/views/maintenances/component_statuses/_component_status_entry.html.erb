@@ -15,7 +15,7 @@
       <% if component_status.status == true %>
         <span class="label label-success">Not Broken</span>
       <% else %>
-        <% if component_status.component.spare_parts.count == 0 %>
+        <% if component_status.component.active_spare_parts.count == 0 %>
           	<span class="label label-important">No Spare Part. Ask Manager</span>
         <% else %>
           <p id="component_status_nav_wrapper-<%= component_status.id %>">

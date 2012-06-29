@@ -4,6 +4,12 @@ class ComponentCategory < ActiveRecord::Base
   has_many :components 
   belongs_to :office
   
+  
+  def active_spare_parts
+    self.spare_parts.where(:is_active => true )
+  end
+  
+  
   def self.create_component_category( component_category_name , employee)
     if not employee.has_role?(:machine_builder)
       return nil

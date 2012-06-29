@@ -72,7 +72,7 @@
           <% @machine.components.each do |component| %>
             <tr>
               <td><%= component.name  %></td>
-              <td><%= component.spare_parts.count %></td>
+              <td><%= component.active_spare_parts.count %></td>
               <td><button href="#" class="btn">Delete</button></td>
             </tr>
           <% end %>

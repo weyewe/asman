@@ -25,6 +25,10 @@ class SparePartsController < ApplicationController
         flash[:error] << "There has been spare part with part code: #{params[:spare_part][:part_code].upcase}" + "<br />"
       end
       
+      if params[:spare_part][:part_code].nil? or params[:spare_part][:part_code].length ==0 
+        flash[:error] << "Please fill in the part code" + "<br />"
+      end
+      
       if params[:price].nil? or params[:price].length == 0
         flash[:error] << "Please fill in the price "
       end

@@ -5,8 +5,8 @@
         "Machine: <b>#{@machine.model_name}</b>" + "<br />"    +  
         "Component Category: <b>#{@component.component_category.name}</b>"  + "<br />"    +
         "Component: <b>#{@component.name}</b>"  + "<br />"    +
-        "Total Spare Parts in the same category: <b>#{@component.component_category.spare_parts.count}</b>"  + "<br />"    +
-        "Total Compatible Spare Parts: <b>#{@component.spare_parts.count}</b>"   ).html_safe %>
+        "Total Spare Parts in the same category: <b>#{@component.component_category.active_spare_parts.count}</b>"  + "<br />"    +
+        "Total Compatible Spare Parts: <b>#{@component.active_spare_parts.count}</b>"   ).html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
  
@@ -81,7 +81,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @component.component_category.spare_parts.each do |spare_part| %>
+          <% @component.component_category.active_spare_parts.each do |spare_part| %>
             <%= render :partial => "spare_parts/compatibility_entry", :locals => {
               :spare_part => spare_part,
               :component => @component

@@ -7,6 +7,10 @@ class Office < ActiveRecord::Base
   has_many :component_categories 
   has_many :maintenances
   
+  def active_spare_parts
+    self.spare_parts.where(:is_active => true )
+  end
+  
   def create_user(role_list, user_hash)
     new_user = User.new(user_hash)
     

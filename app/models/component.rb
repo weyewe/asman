@@ -8,6 +8,10 @@ class Component < ActiveRecord::Base
   has_many :component_statuses 
   belongs_to :machine
   
+  
+  def active_spare_parts
+    self.spare_parts.where(:is_active => true )
+  end
   # add_new_spare_part( {:part_code =>"MKC-3001", :price => 50 }, machine_builder )
   def add_new_spare_part(  spare_part_hash , employee )
     if employee.nil? or not employee.has_role?(:machine_builder)
@@ -25,6 +29,10 @@ class Component < ActiveRecord::Base
     
     
     office = employee.active_job_attachment.office
+    
+    if spare_part_part_code.nil? or spare_part_part_code.length == 0
+      return nil
+    end
     
     if  SparePart.pre_existing_in_office?(spare_part_part_code,   employee) 
       return nil

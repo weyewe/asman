@@ -40,7 +40,7 @@ class ComponentStatus < ActiveRecord::Base
   
   
   def compatible_spare_parts
-    spare_parts  = self.component.spare_parts
+    spare_parts  = self.component.active_spare_parts
     result = []
     spare_parts.each do |spare_part|
           result << [ "#{spare_part.part_code}" , 

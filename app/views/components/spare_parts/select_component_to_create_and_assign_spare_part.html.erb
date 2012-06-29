@@ -16,7 +16,8 @@
           <tr>
             <th>Component</th>
             <th>Category</th>
-            <th>Total Spare Part</th>
+            <th>Total Compatible Spare Part</th>
+            <th>Spare Part in the same Category</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +25,8 @@
             <tr>
               <td><%=  link_to component.name  , new_component_spare_part_url(component) %></td>
               <td><%= component.component_category.name %></td>
-              <td><%= component.spare_parts.count  %></td>
+              <td><%= component.active_spare_parts.count  %></td>
+              <td><%= component.component_category.active_spare_parts.count  %></td>
             </tr>
           <% end %>
 
