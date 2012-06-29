@@ -309,7 +309,7 @@ module ApplicationHelper
   }
   
   ACCOUNT_MANAGER_PROCESS_LIST = {
-    :header_title => "Machine Builder",
+    :header_title => "Account Manager",
     :processes => [
       {
         :title => "Create Client",

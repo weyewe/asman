@@ -8,6 +8,7 @@ class Component < ActiveRecord::Base
   has_many :component_statuses 
   belongs_to :machine
   
+  after_create :update_non_finalized_maintenances 
   
   def active_spare_parts
     self.spare_parts.where(:is_active => true )
@@ -113,4 +114,11 @@ class Component < ActiveRecord::Base
   def is_compatible_with?(spare_part)
     Compatibility.where(:component_id => self.id , :spare_part_id => spare_part.id).count != 0
   end
+  
+  def update_non_finalized_maintenances
+    Maintenance.where(:is_finalized => false, :machine_id => self.machine_id  ).each do |maintenance|
+      maintenance.component_statuses.create(:component_id => self.id )
+    end
+  end
+  
 end

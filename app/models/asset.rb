@@ -23,7 +23,7 @@ class Asset < ActiveRecord::Base
       return nil
     else
       return Maintenance.create(:work_order_no => work_order_no, :asset_id => self.id, :creator_id => employee.id,
-      :office_id => employee.active_job_attachment.office_id  )
+      :office_id => employee.active_job_attachment.office_id , :machine_id => self.machine_id )
     end
   end
   

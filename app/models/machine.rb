@@ -7,6 +7,7 @@ class Machine < ActiveRecord::Base
   has_many :assets 
   
   
+  
   def self.create_machine( params_model_name, machine_category, employee )
     if employee.nil? or not employee.has_role?(:machine_builder)
       return nil
@@ -72,4 +73,7 @@ class Machine < ActiveRecord::Base
     end
     
   end
+  
+  
+  
 end

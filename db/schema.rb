@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.integer  "creator_id"
     t.integer  "asset_id"
     t.integer  "office_id"
+    t.integer  "machine_id"
     t.boolean  "is_finalized",           :default => false
     t.integer  "finalizer_id"
     t.text     "invoice_url"
