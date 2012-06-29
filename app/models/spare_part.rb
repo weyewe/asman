@@ -3,7 +3,7 @@ class SparePart < ActiveRecord::Base
   has_many :compatibilities 
   has_many :components, :through => :compatibilities 
   belongs_to :component_category 
-  
+  belongs_to :office 
   has_many :prices 
   
   
@@ -42,20 +42,21 @@ class SparePart < ActiveRecord::Base
     office.spare_parts.where(:part_code => part_code  ).count != 0 
   end
   
-  def create_price(price, employee ) 
-    if price.nil?
+  #price amount is in BigDecimal 
+  def create_price(price_amount, employee ) 
+    if price_amount.nil?
       return nil
     end
-    price_amount = BigDecimal(price )
     
     self.prices.create(:amount => price_amount, :creator_id => employee.id )
   end
   
-  def change_price(price , employee )
-    if price.nil?
+  # the price is in BigDecimal 
+  def change_price(price_amount , employee )
+    if price_amount.nil?
       return nil
     end
-    self.prices.create( :amount => BigDecimal( price ), :creator_id => employee.id )
+    self.prices.create( :amount => price_amount , :creator_id => employee.id )
   end
   
   def active_price

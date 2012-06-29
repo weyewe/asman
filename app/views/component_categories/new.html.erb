@@ -27,15 +27,8 @@
 
       <%= simple_form_for(@new_component_category, :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
         
-        
-         
-         
         <%= f.input :name , :input_html => {:class => "input-xlarge span5"}, 
          :label => "Category Name" %>
-         
-         
-       
-
 
         <div class="form-actions">
           <%= f.button :submit , :class => "btn btn-primary", :text=> "Create Component Category" %>

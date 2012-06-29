@@ -75,15 +75,16 @@ cooler_component_3 = cooler_machine_1.create_component( "Freon Burner", machine_
 
 puts "component - create new spare part "
 
-compatibility_fountain_1_1 = fountain_component_1.add_new_spare_part( {:part_code =>"MKC-3001", :price => '50' }, machine_builder )
-compatibility_fountain_1_2 = fountain_component_1.add_new_spare_part( {:part_code =>"MKC-3001Z", :price => '4' }, machine_builder )
-compatibility_fountain_2_1 = fountain_component_2.add_new_spare_part( {:part_code =>"KKC-8734", :price => '44' }, machine_builder )
-compatibility_fountain_2_2 = fountain_component_2.add_new_spare_part( {:part_code =>"KKC-8735", :price => '3' }, machine_builder )
+spare_part_fountain_1_1 = fountain_component_1.add_new_spare_part( {:part_code =>"MKC-3001", :price => '50' }, machine_builder )
+puts "after the spare part 1 "
+spare_part_fountain_1_2 = fountain_component_1.add_new_spare_part( {:part_code =>"MKC-3001Z", :price => '4' }, machine_builder )
+spare_part_fountain_2_1 = fountain_component_2.add_new_spare_part( {:part_code =>"KKC-8734", :price => '44' }, machine_builder )
+spare_part_fountain_2_2 = fountain_component_2.add_new_spare_part( {:part_code =>"KKC-8735", :price => '3' }, machine_builder )
 
-compatibility_cooler_1_1 =     cooler_component_1.add_new_spare_part( {:part_code =>"MKC-3001" , :price => '9.5' }, machine_builder )
-compatibility_cooler_1_2 =     cooler_component_1.add_new_spare_part( {:part_code =>"MKC-3001Z", :price => '6' }, machine_builder )
-compatibility_cooler_2_1 =     cooler_component_2.add_new_spare_part( {:part_code =>"KKC-8734", :price => '4' }, machine_builder )
-compatibility_cooler_2_2 =     cooler_component_2.add_new_spare_part( {:part_code =>"KKC-8735", :price => '23' }, machine_builder )
+spare_part_cooler_1_1 =     cooler_component_1.add_new_spare_part( {:part_code =>"MKC-3001" , :price => '9.5' }, machine_builder )
+spare_part_cooler_1_2 =     cooler_component_1.add_new_spare_part( {:part_code =>"MKC-3001Z", :price => '6' }, machine_builder )
+spare_part_cooler_2_1 =     cooler_component_2.add_new_spare_part( {:part_code =>"KKC-8734", :price => '4' }, machine_builder )
+spare_part_cooler_2_2 =     cooler_component_2.add_new_spare_part( {:part_code =>"KKC-8735", :price => '23' }, machine_builder )
 
 
 puts "component - add compatibility to the existing sparepart"
@@ -97,7 +98,7 @@ fountain_component_1.assign_existing_spare_part( existing_spare_part_1, machine_
 fountain_component_1.remove_existing_spare_part( existing_spare_part_1, machine_builder )
 
 puts "[PENDING] component - delete compatibility to the existing sparepart, not important for demo"
-spare_part_fountain_1_1 = compatibility_fountain_1_1.spare_part
+# spare_part_fountain_1_1 = compatibility_fountain_1_1.spare_part
 fountain_component_1.destroy_compatibility( spare_part_fountain_1_1 , machine_builder )
 
 puts "we record the price history as well"

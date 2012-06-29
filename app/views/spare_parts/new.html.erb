@@ -3,12 +3,69 @@
   <%= create_guide("Create Spare Part", 
         "Office: <b>#{current_office.name}</b>" + "<br />"    +  
         "Machine: <b>#{@machine.model_name}</b>" + "<br />"    +  
+        "Component Category: <b>#{@component.component_category.name}</b>"  + "<br />"    +
         "Component: <b>#{@component.name}</b>"  + "<br />"    +
         "Total Spare Parts in the same category: <b>#{@component.component_category.spare_parts.count}</b>"  + "<br />"    +
         "Total Compatible Spare Parts: <b>#{@component.spare_parts.count}</b>"   ).html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
  
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Well done!</strong> <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+  
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Create Failure!</strong> Please fill in all fields.<br />
+      <% flash[:error].each do |error| %>
+        <%= error.html_safe %>
+      <% end %>
+      
+    </div>
+  <% end %>
+  
+  
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>New Spare Part</h2><br />
+
+      <%= simple_form_for([@component, @new_spare_part], 
+        :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
+
+        <%= f.input :part_code , :input_html => {:class => "input-xlarge span5"}, 
+        :label => "Part Code" %>
+        
+        
+        
+        <div class="control-group string optional">
+          <label class="string optional control-label" for="price">Price</label>
+          <div class="controls">
+            <%= text_field_tag :price , '',:class => "string input-xlarge span5",    :label => "Price" %>
+          </div>
+        </div>
+        
+        
+        <div class="controls">
+          
+          <!--           <input class="string optional input-xlarge span5" 
+                      id="spare_part_part_code" name="spare_part[part_code]" size="50" type="text"> -->
+        </div>
+        
+        
+        
+
+        <div class="form-actions">
+          <%= f.button :submit , :class => "btn btn-primary", :text=> "Part Code" %>
+        </div>
+      <% end %>
+    </div> 
+  </div><!--/row-->
+  <hr />
+
   <div class="row-fluid">
     <div id="data_list">
       <p>Spare Parts for component category: <b><%= @component.component_category.name %></b></p>

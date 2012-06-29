@@ -14,22 +14,32 @@ class Component < ActiveRecord::Base
       return nil
     end
     
-    office = employee.active_job_attachment.office
+    spare_part_part_code = spare_part_hash[:part_code].upcase
+    spare_part_price = spare_part_hash[:price]
     
-    if  SparePart.pre_existing_in_office?(spare_part_hash[:part_code],   employee) 
+    if spare_part_price.nil? or spare_part_price.length == 0  or not Price.valid_price_string?(spare_part_price)
       return nil
     end
     
-    spare_part = SparePart.create(:part_code => spare_part_hash[:part_code] , 
+    spare_part_price = Price.parse_price( spare_part_price )
+    
+    
+    office = employee.active_job_attachment.office
+    
+    if  SparePart.pre_existing_in_office?(spare_part_part_code,   employee) 
+      return nil
+    end
+    
+    spare_part = SparePart.create(:part_code => spare_part_part_code, 
                   :office_id => office.id , 
                   :creator_id => employee.id ,
                   :component_category_id => self.component_category_id )
                   
-    spare_part.create_price( spare_part_hash[:price] , employee )
+    spare_part.create_price( spare_part_price , employee )
                   
-    return Compatibility.create(:spare_part_id => spare_part.id, :component_id => self.id)
+    Compatibility.create(:spare_part_id => spare_part.id, :component_id => self.id)
     
-     
+    return spare_part 
   end
   
   

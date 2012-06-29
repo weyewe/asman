@@ -288,6 +288,10 @@ module ApplicationHelper
           {
             :controller => "spare_parts",
             :action => "new"
+          },
+          {
+            :controller => "spare_parts",
+            :action => "create"
           }
         ]
       }# ,
