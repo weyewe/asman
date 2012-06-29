@@ -54,6 +54,12 @@ class ComponentStatus < ActiveRecord::Base
   end
   
   def assign_replacement_spare_part(spare_part, employee)
+    maintenance = self.maintenance 
+    
+    if maintenance.is_finalized == true 
+      return nil
+    end
+    
     if not employee.has_role?(:data_entry)
       return nil
     end

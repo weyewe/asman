@@ -56,7 +56,7 @@ class MaintenancesController < ApplicationController
   
   def finalize_maintenance
     @maintenance = Maintenance.find_by_id(params[:maintenance_id])
-    @maintenance.produce_invoice!( data_entry ) 
+    @maintenance.produce_invoice!( current_user  ) 
     
     if @maintenance.is_finalized == true 
       flash[:notice] = "Maintenance Finalization is successful. Please wait for the invoice creation"

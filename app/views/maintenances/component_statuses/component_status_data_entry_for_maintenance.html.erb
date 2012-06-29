@@ -8,7 +8,24 @@
         "Work Order No: <b>#{@maintenance.work_order_no}</b>" ).html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
- 
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Well done!</strong> <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+  
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Finalization Fails!</strong> Please fill in all fields.<br />
+      <% flash[:error].each do |error| %>
+        <%= error.html_safe %>
+      <% end %>
+      
+    </div>
+  <% end %>
+  
   <div class="row-fluid">
     <div id="data_list">
       <p>Total Components  for Machine <%= @machine.model_name %>: <b><%= @component_statuses.count %></b></p>
@@ -35,13 +52,18 @@
       
       
       <div class="alert alert-success" style="margin-top:20px;">
-        <strong>If you are done,</strong> click the following button: <br /> 
-        <%= form_for  @maintenance, :url => finalize_maintenance_url, 
-              :method => :post, :html => {:class =>  "prevent_double_submit form-horizontal"}     do |f| %>
-          <%= hidden_field_tag 'maintenance_id' , @maintenance.id  %>
-          <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Finalize + Create Invoice</button>
-          </div>
+        
+        <% if @maintenance.is_finalized == false %>
+          <strong>If you are done,</strong> click the following button: <br /> 
+          <%= form_for  @maintenance, :url => finalize_maintenance_url, 
+                :method => :post, :html => {:class =>  "prevent_double_submit form-horizontal"}     do |f| %>
+            <%= hidden_field_tag 'maintenance_id' , @maintenance.id  %>
+            <div class="form-actions">
+              <button class="btn btn-primary" type="submit">Finalize + Create Invoice</button>
+            </div>
+          <% end %>
+        <% else %>
+          <strong>This maintenance is closed</strong>
         <% end %>
       </div>
     </div><!-- end of #data_list -->

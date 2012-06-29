@@ -16,6 +16,15 @@ class Maintenance < ActiveRecord::Base
     end
   end
   
+  def any_component_not_marked?
+    self.component_statuses.where(:status => nil).count != 0 
+  end
+  
+  def any_broken_component_not_replaced?
+    self.component_statuses.where(:status => false, :replacement_spare_part_id => nil ).count != 0 
+  end
+  
+  
   
   def produce_invoice!( employee ) 
     if not employee.has_role?(:data_entry )
@@ -23,6 +32,14 @@ class Maintenance < ActiveRecord::Base
     end
     
     if self.is_finalized == true 
+      return self
+    end
+    
+    if any_component_not_marked?
+      return self
+    end
+    
+    if any_broken_component_not_replaced?
       return self
     end
     
