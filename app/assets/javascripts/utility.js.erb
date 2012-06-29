@@ -50,6 +50,24 @@ function summonModalHTML(header_html, body_html, modal_id){
   });
 }
 
+function summonModalEdit(header_text, modal_id){
+  var $modal_wrapper = $("#" + modal_id); 
+  var $header = $(".modal-header h3", $modal_wrapper);
+  var $body  = $(".modal-body", $modal_wrapper);
+  var $modal_closer = $(".modal-footer .modal-closer ", $modal_wrapper);
+  // setting the header text
+  $header.text( header_text );
+  // $body.html( body_html );
+  
+  $modal_wrapper.modal('show');
+  
+  $modal_closer.click(function(){
+    // console.log("Oh yeah baby, closed");
+    $modal_wrapper.modal('hide');
+    return false;
+  });
+}
+
 // function summonAlertModal(header_html, body_html, modal_id, row_id ){
 //   
 //   

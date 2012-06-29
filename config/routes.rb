@@ -16,6 +16,7 @@ Asman::Application.routes.draw do
   resources :components do
     resources :spare_parts
   end
+  resources :spare_parts
   
   resources :compatibilities 
   

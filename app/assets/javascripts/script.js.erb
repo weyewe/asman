@@ -139,12 +139,58 @@ $(document).ready(function(){
       data: $this.serialize(),
       dataType: 'script',
       success: function(response){
-// done in the server 
-        // $form.clearForm();
          $this.hideLoading();
       }
     });
     
     return false;
+  });
+  
+  
+  /*
+  Edit model trigger
+  */
+  $(".modal_trigger").live("click", function(){
+    var $this = $(this); 
+    var action_url = $this.attr("href");
+    var $form = $("#edit_form");
+    
+    
+    var $entry_wrapper =  $this.parents("tr");
+    var current_part_code = $("td.part_code", $entry_wrapper).text();
+    var current_price =$("td.price", $entry_wrapper).text();
+    
+    $(".edit_model").show();
+    $("#modal_notification").hide();
+    $form.attr("action", action_url);
+    summonModalEdit("Edit spare part: " + current_part_code, "myModal");
+    
+    $("#current_part_code").attr('value', current_part_code );
+    $("#current_price").attr( 'value', current_price );
+    
+    
+    
+    
+    
+    return false ;
+  });
+  
+  $(".edit_model").live("submit", function(){
+    var  $form = $(this);
+    
+    
+    $form.showLoading(); 
+    $.ajax({
+      url: $form.attr("action"),
+      type: "POST",
+      data: $form.serialize(),
+      dataType: 'script',
+      success: function(response){
+         $form.hideLoading();
+         $form.clearForm();
+      }
+    });
+    
+    return false; 
   });
 });

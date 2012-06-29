@@ -39,7 +39,20 @@ class SparePartsController < ApplicationController
       
       render :file => "spare_parts/new"
     end
+  end
+  
+  
+  def update
+    @component = Component.find_by_id params[:component_id]
+    @spare_part = SparePart.find_by_id params[:id]
     
+    @price = params[:price]
+    @part_code = params[:part_code]
+    
+    @initial_price = @spare_part.active_price.amount
+    @initial_part_code = @spare_part.part_code 
+    
+    @result = @spare_part.update_details(@part_code, @price, current_user)
     
   end
 end

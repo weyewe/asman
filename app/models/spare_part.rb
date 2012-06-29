@@ -37,8 +37,8 @@ class SparePart < ActiveRecord::Base
   end
   
   
-  def SparePart.pre_existing_in_office?(part_code, machine_builder) 
-    office = machine_builder.active_job_attachment.office
+  def SparePart.pre_existing_in_office?(part_code, employee) 
+    office = employee.active_job_attachment.office
     office.active_spare_parts.where(:part_code => part_code, :is_active => true   ).count != 0 
   end
   
@@ -61,5 +61,33 @@ class SparePart < ActiveRecord::Base
   
   def active_price
     self.prices.where(:is_active => true ).first
+  end
+  
+  def update_details( part_code, price, employee)
+    if part_code.nil? or price.nil? or employee.nil?
+      return nil
+    end
+    
+    if part_code.length == 0 
+      return nil
+    end
+    
+    price_string = price.gsub(",", '')
+    part_code = part_code.upcase 
+    if not  Price.valid_price_string?(price_string)
+      return nil
+    end
+    
+    #  can't take other part's part code 
+    if SparePart.pre_existing_in_office?(part_code, employee) and self.part_code != part_code 
+      return nil
+    end
+    
+    self.part_code = part_code
+    self.save
+    
+    self.change_price( Price.parse_price( price_string ), employee )
+    
+    return self 
   end
 end

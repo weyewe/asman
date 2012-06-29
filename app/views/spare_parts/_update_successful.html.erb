@@ -1,0 +1,29 @@
+<div id="modal_notification">
+
+<table cellpadding="0" cellspacing="0" border="0" 
+      class="table table-striped table-bordered" id="example">
+  <thead>
+    <tr><th colspan="2" style="text-align:center;">Update Successful</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <b>Part Code</b>
+      </td>
+      <td>
+        <%= @spare_part.part_code  %>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <b>Price</b>
+      </td>
+      <td>
+        <%= print_money @spare_part.active_price.amount %>
+      </td>
+    </tr>
+  
+  </tbody>
+</table>
+</div>
