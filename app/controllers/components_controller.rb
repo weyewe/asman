@@ -23,12 +23,14 @@ class ComponentsController < ApplicationController
     else
       @new_component = Component.new 
       flash[:error] = "Hey, do something better"
+      
+      add_breadcrumb "Select Machine", 'select_machine_to_create_component_url'
+      set_breadcrumb_for @machine, 'new_machine_component_url' + "(#{@machine.id})", 
+                  "New Component"
       render :file => "components/new"
     end
     
-    add_breadcrumb "Select Machine", 'select_machine_to_create_component_url'
-    set_breadcrumb_for @machine, 'new_machine_component_url' + "(#{@machine.id})", 
-                "New Component"
+    
   end
   
 =begin

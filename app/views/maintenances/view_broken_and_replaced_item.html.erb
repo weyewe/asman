@@ -7,7 +7,7 @@
         "Asset No: <b>#{@asset.asset_no }</b>" + "<br />"   +
         "Work Order No: <b>#{@maintenance.work_order_no}</b>"      ).html_safe %>
   
-  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
   <% if flash[:notice] %>
     <div class="alert alert-success">
       <a data-dismiss="alert" class="close">×</a>

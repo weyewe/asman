@@ -24,10 +24,15 @@ class ClientsController < ApplicationController
   end
   
   def select_client_to_create_asset
+    
+    add_breadcrumb "Select Client", 'select_client_to_create_asset_url'
+    
     render :file => "clients/assets/select_client_to_create_asset"
   end
   
   def select_client_to_create_maintenance
+    add_breadcrumb "Select Client", 'select_client_to_create_maintenance_url'
+    
     render :file => "clients/maintenances/select_client_to_create_maintenance"
   end
   

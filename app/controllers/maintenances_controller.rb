@@ -6,7 +6,11 @@ class MaintenancesController < ApplicationController
     
     @new_maintenance = Maintenance.new
     
-    
+    add_breadcrumb "Select Client", 'select_client_to_create_maintenance_url'
+    set_breadcrumb_for @client, 'select_asset_to_create_maintenance_url' + "(#{@client.id})", 
+                "Select Asset"
+    set_breadcrumb_for @asset, 'new_maintenance_for_asset_url' + "(#{@asset.id})", 
+                "New Asset"
     
   end
   
@@ -35,6 +39,13 @@ class MaintenancesController < ApplicationController
         flash[:error] << "Unfinalized Past Asset Maintenance"
       end
       
+      
+      add_breadcrumb "Select Client", 'select_client_to_create_maintenance_url'
+      set_breadcrumb_for @client, 'select_asset_to_create_maintenance_url' + "(#{@client.id})", 
+                  "Select Asset"
+      set_breadcrumb_for @asset, 'new_maintenance_for_asset_url' + "(#{@asset.id})", 
+                  "New Asset"
+                  
       render :file => "maintenances/new_maintenance_for_asset"
     end
   end
@@ -72,6 +83,16 @@ class MaintenancesController < ApplicationController
     @asset = @maintenance.asset
     @machine = @asset.machine
     @client = @asset.client 
+    
+    add_breadcrumb "Select Client", 'select_client_to_create_maintenance_url'
+    set_breadcrumb_for @client, 'select_asset_to_create_maintenance_url' + "(#{@client.id})", 
+                "Select Asset"
+    set_breadcrumb_for @asset, 'new_maintenance_for_asset_url' + "(#{@asset.id})", 
+                "New Asset"
+    set_breadcrumb_for @maintenance, 'view_broken_and_replaced_item_url' + "(#{@maintenance.id})", 
+                "Maintenance Result"
+
+                
   end
   
 end

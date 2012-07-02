@@ -23,12 +23,14 @@ class MachinesController < ApplicationController
     else
       @new_machine = Machine.new 
       flash[:error] = "Hey, do something better"
+      
+      add_breadcrumb "Select Machine Category", 'select_machine_category_to_create_machine_url'
+      set_breadcrumb_for @machine_category, 'new_machine_category_machine_url' + "(#{@machine_category.id})", 
+                  "New Machine"
       render :file => "machines/new"
     end
     
-    add_breadcrumb "Select Machine Category", 'select_machine_category_to_create_machine_url'
-    set_breadcrumb_for @group_loan, 'new_machine_category_machine_url' + "(#{@machine_category.id})", 
-                "New Machine"
+    
   end
   
 =begin
