@@ -85,5 +85,8 @@ class Maintenance < ActiveRecord::Base
     Maintenance.where(:is_paid => false, :is_finalized => false, :asset_id => client.asset_id_list )
   end
   
+  def broken_components
+    self.component_statuses.where(:status => false )
+  end
   
 end

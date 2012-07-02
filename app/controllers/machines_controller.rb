@@ -2,6 +2,10 @@ class MachinesController < ApplicationController
   def new
     @machine_category = MachineCategory.find_by_id( params[:machine_category_id] )
     @new_machine = Machine.new 
+    
+    add_breadcrumb "Select Machine Category", 'select_machine_category_to_create_machine_url'
+    set_breadcrumb_for @machine_category, 'new_machine_category_machine_url' + "(#{@machine_category.id})", 
+                "New Machine"
   end
   
  
@@ -21,6 +25,10 @@ class MachinesController < ApplicationController
       flash[:error] = "Hey, do something better"
       render :file => "machines/new"
     end
+    
+    add_breadcrumb "Select Machine Category", 'select_machine_category_to_create_machine_url'
+    set_breadcrumb_for @group_loan, 'new_machine_category_machine_url' + "(#{@machine_category.id})", 
+                "New Machine"
   end
   
 =begin
@@ -29,6 +37,8 @@ class MachinesController < ApplicationController
 
   def select_machine_to_create_component
     @machines = current_office.machines.order("machine_category_id ASC")
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_component_url'
     
     render :file => "machines/components/select_machine_to_create_component"
   end
@@ -39,6 +49,8 @@ class MachinesController < ApplicationController
 =end
   def select_machine_to_create_and_assign_spare_part
     @machines = current_office.machines 
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_and_assign_spare_part_url'
     render :file => "machines/spare_parts/select_machine_to_create_and_assign_spare_part"
   end
 end

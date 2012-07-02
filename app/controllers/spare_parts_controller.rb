@@ -4,6 +4,13 @@ class SparePartsController < ApplicationController
     @new_spare_part = SparePart.new
     
     @machine = @component.machine 
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_and_assign_spare_part_url'
+    set_breadcrumb_for @machine, 'select_component_to_create_and_assign_spare_part_url' + "(#{@machine.id})", 
+                "Select Component"
+                
+    set_breadcrumb_for @component, 'new_component_spare_part_url' + "(#{@component.id})", 
+                "Select Component"
   end
   
   def create

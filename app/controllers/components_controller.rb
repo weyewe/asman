@@ -3,6 +3,10 @@ class ComponentsController < ApplicationController
   def new
     @machine = Machine.find_by_id params[:machine_id]
     @new_component = Component.new 
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_component_url'
+    set_breadcrumb_for @machine, 'new_machine_component_url' + "(#{@machine.id})", 
+                "New Component"
   end
   
   def create
@@ -21,6 +25,10 @@ class ComponentsController < ApplicationController
       flash[:error] = "Hey, do something better"
       render :file => "components/new"
     end
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_component_url'
+    set_breadcrumb_for @machine, 'new_machine_component_url' + "(#{@machine.id})", 
+                "New Component"
   end
   
 =begin
@@ -29,6 +37,11 @@ class ComponentsController < ApplicationController
   def select_component_to_create_and_assign_spare_part
     @machine = Machine.find_by_id params[:machine_id]
     @components = @machine.components 
+    
+    add_breadcrumb "Select Machine", 'select_machine_to_create_and_assign_spare_part_url'
+    set_breadcrumb_for @machine, 'select_component_to_create_and_assign_spare_part_url' + "(#{@machine.id})", 
+                "Select Component"
+                
     render :file => 'components/spare_parts/select_component_to_create_and_assign_spare_part'
   end
 end

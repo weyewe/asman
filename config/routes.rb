@@ -59,7 +59,7 @@ Asman::Application.routes.draw do
   match 'select_asset_to_create_maintenance/:client_id' => 'assets#select_asset_to_create_maintenance', :as => :select_asset_to_create_maintenance
   match 'new_maintenance_for_asset/:asset_id' => 'maintenances#new_maintenance_for_asset', :as => :new_maintenance_for_asset
   match 'create_maintenance_for_asset/:asset_id' => 'maintenances#create_maintenance_for_asset', :as => :create_maintenance_for_asset, :method => :post
-  
+  match 'view_broken_and_replaced_item/:maintenance_id' => 'maintenances#view_broken_and_replaced_item', :as => :view_broken_and_replaced_item
 =begin
   STEP 4 : Select Maintenance to be done 
 =end

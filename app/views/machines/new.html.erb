@@ -4,7 +4,7 @@
         "Office: <b>#{current_office.name}</b>" + "<br />"    +  
         "Machine Category: <b>#{@machine_category.name}</b> "      ).html_safe %>
   
-  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
   <% if flash[:notice] %>
     <div class="alert alert-success">
       <a data-dismiss="alert" class="close">×</a>
@@ -23,7 +23,7 @@
   <div class="row-fluid">
     <div class="span12">
       
-      <h2>New Machine Category</h2><br />
+      <h2>New Machine</h2><br />
 
       <%= simple_form_for([@machine_category, @new_machine], :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
         

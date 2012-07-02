@@ -362,6 +362,10 @@ module ApplicationHelper
           {
             :controller => 'maintenances',
             :action => 'create_maintenance_for_asset'
+          },
+          {
+            :controller => 'maintenances',
+            :action => "view_broken_and_replaced_item"
           }
         ]
       }

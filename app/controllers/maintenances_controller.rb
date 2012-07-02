@@ -67,4 +67,11 @@ class MaintenancesController < ApplicationController
     redirect_to component_status_data_entry_for_maintenance_url(@maintenance)
   end
   
+  def view_broken_and_replaced_item
+    @maintenance = Maintenance.find_by_id(params[:maintenance_id])
+    @asset = @maintenance.asset
+    @machine = @asset.machine
+    @client = @asset.client 
+  end
+  
 end

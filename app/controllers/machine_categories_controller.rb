@@ -24,6 +24,9 @@ class MachineCategoriesController < ApplicationController
   def select_machine_category_to_create_machine
     @machine_categories = current_office.machine_categories 
     
+    
+    add_breadcrumb "Select Machine Category", 'select_machine_category_to_create_machine_url'
+    
     render :file => "machine_categories/machines/select_machine_category_to_create_machine"
   end
 end

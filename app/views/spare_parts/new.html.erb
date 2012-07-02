@@ -8,7 +8,7 @@
         "Total Spare Parts in the same category: <b>#{@component.component_category.active_spare_parts.count}</b>"  + "<br />"    +
         "Total Compatible Spare Parts: <b>#{@component.active_spare_parts.count}</b>"   ).html_safe %>
   
-  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
  
   <% if flash[:notice] %>
     <div class="alert alert-success">

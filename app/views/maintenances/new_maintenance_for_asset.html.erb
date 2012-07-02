@@ -30,7 +30,7 @@
   <div class="row-fluid">
     <div class="span12">
       
-      <h2>New Client</h2><br />
+      <h2>New Maintenance</h2><br />
 
       <%= simple_form_for(@new_maintenance,:url => create_maintenance_for_asset_url(@asset),  
                 :method => :post, 
@@ -78,16 +78,18 @@
             <th>Received</th>
             <th>Maintenance Done</th>
             <th>Paid</th>
+            <th>Broken Components</th>
           </tr>
         </thead>
         <tbody>
           <% @asset.maintenances.order("created_at DESC").each do |maintenance| %>
             <tr>
               <td><%= maintenance.asset.asset_no  %></td>
-              <td><%= maintenance.work_order_no  %></td>
+              <td><%= link_to maintenance.work_order_no , view_broken_and_replaced_item_url(maintenance) %></td>
               <td><%= maintenance.created_at  %></td>
               <td><%= maintenance.finalization_datetime  %></td>
               <td><%= maintenance.payment_datetime  %></td>
+              <td><%= maintenance.broken_components.count  %></td>
             </tr>
           <% end %>
 
