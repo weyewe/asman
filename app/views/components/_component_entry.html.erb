@@ -1,0 +1,17 @@
+<tr id="component_entry-<%= component.id %>">
+  <td class="header_text"><%=  component.name %></td>
+  <td><%= component.active_spare_parts.count %></td>
+  
+  
+  <td>
+    <%= link_to "Edit", machine_component_url(component.machine, component) , :class => "btn btn-warning modal_trigger" %>
+  </td>
+  <td style="text-align:center;">
+    <a href="#" class="btn propose action"
+      id="finalize-<%= component.id %>">Delete</a>
+  </td>
+  
+  
+  
+  
+</tr>

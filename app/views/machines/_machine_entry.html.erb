@@ -1,0 +1,7 @@
+<tr id="machine_entry-<%= machine.id %>">
+  <td class="header_text"><%= machine.model_name  %></td>
+  <td><%= machine.assets.count %></td>
+  <td>
+    <%= link_to "Edit", machine_url(machine), :class => "btn btn-warning modal_trigger" %>
+  </td>
+</tr>

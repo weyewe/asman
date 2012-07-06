@@ -98,6 +98,15 @@
 </div><!--/span-->
 
 
+<div class=" hidden" id="approve_propose_form_wrapper">
+  <%= form_for Component.new, :url => execute_destroy_spare_part_url   do |f| %>
+    <%= hidden_field_tag 'entity_id' , ''  %>
+    <%= hidden_field_tag 'action_role', '' %>
+    <%= hidden_field_tag 'action_value', '' %>
+  <% end %>
+</div>
+
+
 <div class=" hidden" id="checkbox_form_wrapper">
   <%= form_for Compatibility.new, :url => compatibilities_url, :method => :post   do |f| %>
     <%= hidden_field_tag 'membership_provider' , ''  %>
@@ -105,7 +114,6 @@
     <%= hidden_field_tag 'membership_decision', '' %>
   <% end %>
 </div>
-
 
 
 
@@ -174,6 +182,9 @@
     <!-- <a href="#" class="btn btn-primary">Save changes</a> -->
   </div>
 </div>
+
+
+
 
 
 

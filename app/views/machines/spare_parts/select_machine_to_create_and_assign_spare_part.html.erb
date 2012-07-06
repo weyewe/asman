@@ -14,7 +14,7 @@
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th>Component Category</th>
+            <th>Machine Model</th>
             <th>Total Component</th>
           </tr>
         </thead>
@@ -22,7 +22,7 @@
           <% @machines.each do |machine| %>
             <tr>
               <td><%= link_to machine.model_name, select_component_to_create_and_assign_spare_part_url(machine)   %></td>
-              <td><%= machine.components.count %></td>
+              <td><%= machine.active_components.count %></td>
             </tr>
           <% end %>
 

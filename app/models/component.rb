@@ -1,5 +1,5 @@
 class Component < ActiveRecord::Base
-  attr_accessible :name, :machine_id, :creator_id , :component_category_id 
+  attr_accessible :name, :machine_id, :creator_id , :component_category_id , :office_id 
   has_many :spare_parts, :through => :compatibilities 
   has_many :compatibilities 
   belongs_to :component_category
@@ -118,6 +118,66 @@ class Component < ActiveRecord::Base
   def update_non_finalized_maintenances
     Maintenance.where(:is_finalized => false, :machine_id => self.machine_id  ).each do |maintenance|
       maintenance.component_statuses.create(:component_id => self.id )
+    end
+  end
+  
+
+  def has_duplicate_component_name_for_the_same_machine?( new_component_name )
+    self.machine.components.where(:name => new_component_name.upcase, :is_active => true ).length != 0 
+  end
+  
+  def update_details( component_name, employee) 
+    if not employee.has_role?(:machine_builder )
+      return nil
+    end
+    
+    employee_office= employee.active_job_attachment.office
+    if self.office_id != employee_office.id
+      return nil
+    end
+    
+    if component_name.nil? or component_name.length == 0 
+      return nil
+    end
+    
+    past_component = self.machine.components.where(:name => component_name.upcase, :is_active => true ).first
+    if not past_component.nil?
+      return nil
+    end
+    
+    self.name = component_name.upcase
+    self.save 
+  end
+  
+  
+  def deactivate(employee)
+    if not employee.has_role?(:machine_builder)
+      return nil
+    end
+    
+    employee_office = employee.active_job_attachment.office
+    if self.office_id != employee_office.id 
+      return nil
+    end
+    
+    if self.is_active == false 
+      return nil
+    end
+    
+    self.is_active = false 
+    self.destroyer_id = employee.id 
+    self.save 
+    
+    #  get all those maintenances 
+    employee_office.pending_execution_maintenances.where(:machine_id => self.machine_id).each do |pending_maintenance|
+      pending_maintenance.component_statuses.where(:component_id => self.id).each do |component_status|
+        component_status.destroy
+      end
+    end
+    
+    # get those compatibilities 
+    self.compatibilities.each do |compatibility|
+      compatibility.destroy 
     end
   end
   

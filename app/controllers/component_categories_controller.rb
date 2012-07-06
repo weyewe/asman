@@ -22,4 +22,10 @@ class ComponentCategoriesController < ApplicationController
     @component_categories = current_office.component_categories 
     render :file => "component_categories/spare_parts/select_component_category_to_create_spare_part"
   end
+  
+  def update
+    @component_category = ComponentCategory.find_by_id params[:id]
+    @new_component_category_name = params[:new_component_category_name]
+    @result = @component_category.update_details( @new_component_category_name, current_user)
+  end
 end

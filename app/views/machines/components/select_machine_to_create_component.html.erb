@@ -24,7 +24,7 @@
             <tr>
               <td><%= machine.machine_category.name %></td>
               <td><%= link_to machine.model_name, new_machine_component_url( machine )%></td>
-              <td><%= machine.components.count  %></td>
+              <td><%= machine.active_components.count  %></td>
               <td><%= machine.assets.count  %></td>
             </tr>
           <% end %>

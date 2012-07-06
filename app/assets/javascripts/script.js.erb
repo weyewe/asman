@@ -163,7 +163,9 @@ $(document).ready(function(){
     $(".edit_model").show();
     $("#modal_notification").hide();
     $form.attr("action", action_url);
-    summonModalEdit("Edit spare part: " + current_part_code, "myModal");
+    
+    var header_text = $(".header_text", $entry_wrapper).text();
+    summonModalEdit("Edit: " + header_text, "myModal");
     
     $("#current_part_code").attr('value', current_part_code );
     $("#current_price").attr( 'value', current_price );

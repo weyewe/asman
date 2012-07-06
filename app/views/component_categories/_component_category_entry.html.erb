@@ -1,0 +1,8 @@
+<tr id="component_category-<%= component_category.id %>">
+  <td class="header_text"><%= component_category.name  %></td>
+  <td><%= component_category.active_components.count %></td>
+  <td><%= component_category.active_spare_parts.count %></td>
+  <td>
+    <%= link_to "Edit", component_category_url(component_category), :class => "btn btn-warning modal_trigger" %>
+  </td>
+</tr>

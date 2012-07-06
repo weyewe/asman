@@ -72,9 +72,12 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.string   "name"
     t.integer  "machine_id"
     t.integer  "creator_id"
+    t.boolean  "is_active",             :default => true
+    t.integer  "destroyer_id"
+    t.integer  "office_id"
     t.integer  "component_category_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   create_table "job_attachments", :force => true do |t|
@@ -153,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.integer  "creator_id"
     t.integer  "component_category_id"
     t.boolean  "is_active",             :default => true
+    t.integer  "destroyer_id"
     t.datetime "created_at",                              :null => false
     t.datetime "updated_at",                              :null => false
   end

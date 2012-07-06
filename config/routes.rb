@@ -34,6 +34,7 @@ Asman::Application.routes.draw do
   match 'select_machine_category_to_create_machine' => "machine_categories#select_machine_category_to_create_machine", :as => :select_machine_category_to_create_machine 
   match 'select_machine_to_create_component' => "machines#select_machine_to_create_component", :as => :select_machine_to_create_component
 
+  match 'execute_destroy_component' => 'components#execute_destroy_component', :as => :execute_destroy_component, :method => :post
 =begin
   Creating spare part
 =end
@@ -41,7 +42,7 @@ Asman::Application.routes.draw do
   match 'select_component_to_create_and_assign_spare_part/:machine_id' => 'components#select_component_to_create_and_assign_spare_part', :as => :select_component_to_create_and_assign_spare_part
   
   match 'select_component_category_to_create_spare_part' => 'component_categories#select_component_category_to_create_spare_part', :as => :select_component_category_to_create_spare_part
-
+  match 'execute_destroy_spare_part' => 'spare_parts#execute_destroy_spare_part', :as => :execute_destroy_spare_part, :method => :post
 
 =begin
   Second Step : Create Client + Register Their Assets

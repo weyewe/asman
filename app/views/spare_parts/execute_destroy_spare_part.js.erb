@@ -1,0 +1,8 @@
+$(document).ready(function(){
+
+
+  <% if @spare_part.is_active == false  %>
+    $("#spare_part_compatibility_assignment-<%= @spare_part.id %>").remove();
+  <% end %>
+  
+});

@@ -1,0 +1,8 @@
+$(document).ready(function(){
+
+
+  <% if @component.is_active == false  %>
+    $("#component_entry-<%= @component.id %>").remove();
+  <% end %>
+  
+});

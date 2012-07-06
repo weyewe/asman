@@ -71,4 +71,11 @@ class SparePartsController < ApplicationController
     @result = @spare_part.update_details(@part_code, @price, current_user)
     
   end
+  
+  def execute_destroy_spare_part
+    @spare_part = SparePart.find_by_id(params[:entity_id])
+    @spare_part.deactivate( current_user )
+  end
+  
+  
 end

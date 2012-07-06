@@ -33,6 +33,16 @@ class MachinesController < ApplicationController
     
   end
   
+  
+  
+  def update
+    @machine = Machine.find_by_id params[:id]
+    @new_machine_model_name = params[:new_machine_model_name]
+    @result = @machine.update_details( @new_machine_model_name, current_user)
+  end
+  
+  
+  
 =begin
   CREATING THE COMPONENT FOR MACHINE
 =end

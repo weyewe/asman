@@ -68,6 +68,12 @@ class SparePart < ActiveRecord::Base
       return nil
     end
     
+    employee_office= employee.active_job_attachment.office
+    if self.office_id != employee_office.id
+      return nil
+    end
+    
+    
     if part_code.length == 0 
       return nil
     end
@@ -89,5 +95,57 @@ class SparePart < ActiveRecord::Base
     self.change_price( Price.parse_price( price_string ), employee )
     
     return self 
+  end
+  
+  def compatible_component_id_list
+    Compatibility.where(:spare_part_id => self.id).map{|x| x.component_id }
+  end
+  
+  def machines
+    Machine.joins(:components).where(:components => {:id => self.compatible_component_id_list })
+  end
+  
+  def machine_id_list
+    machines.map{|x| x.id }
+  end
+  
+  def deactivate(employee)
+    if not employee.has_role?(:machine_builder)
+      puts "fail destroy, not machine builder"
+      return nil
+    end
+    
+    employee_office = employee.active_job_attachment.office
+    if self.office_id != employee_office.id 
+      puts "fail destroy, wrong office"
+      return nil
+    end
+    
+    if self.is_active == false
+      puts "fail destroy, already not active"
+      return nil
+    end
+    
+    self.is_active = false 
+    self.destroyer_id = employee.id 
+    self.save 
+    
+    
+    
+    
+    #  get all those maintenances, set the replacement_spare_part_id to nil if it is self 
+    employee_office.pending_execution_maintenances.where(:machine_id => self.machine_id_list).each do |pending_maintenance|
+      pending_maintenance.component_statuses.where(:component_id => self.compatible_component_id_list).each do |component_status|
+        if component_status.replacement_spare_part_id == self.id 
+          component_status.replacement_spare_part_id = nil
+          component_status.save 
+        end
+      end
+    end
+    
+    # get those compatibilities 
+    self.compatibilities.each do |compatibility|
+      compatibility.destroy 
+    end
   end
 end

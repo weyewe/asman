@@ -7,7 +7,8 @@ class CreateSpareParts < ActiveRecord::Migration
       
       t.integer :component_category_id 
       
-      t.boolean :is_active, :default => true  
+      t.boolean :is_active, :default => true 
+      t.integer :destroyer_id  
 
       t.timestamps
     end

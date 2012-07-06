@@ -65,4 +65,11 @@ class Office < ActiveRecord::Base
     self.maintenances.where(:is_finalized => false )
   end
   
+  def has_machine_with_model_name?(model_name)
+    if model_name.nil? or model_name.length == 0 
+      return false
+    end
+    self.machines.where(:model_name => model_name.upcase ).count > 0 
+  end
+  
 end

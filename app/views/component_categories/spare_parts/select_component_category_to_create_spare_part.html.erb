@@ -22,7 +22,7 @@
           <% @component_categories.each do |component_category| %>
             <tr>
               <td><%=  component_category.name   %></td>
-              <td><%= component_category.components.count %></td>
+              <td><%= component_category.active_components.count %></td>
               <td><%= component_category.active_spare_parts.count %></td>
             </tr>
           <% end %>

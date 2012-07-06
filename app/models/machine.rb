@@ -6,6 +6,10 @@ class Machine < ActiveRecord::Base
   has_many :components
   has_many :assets 
   
+  def active_components
+    self.components.where(:is_active => true )
+  end
+  
   
   
   def self.create_machine( params_model_name, machine_category, employee )
@@ -21,7 +25,7 @@ class Machine < ActiveRecord::Base
     
     model_name = params_model_name.upcase
     # must be uniq in the office
-    if office.machines.where(:model_name => model_name ).count != 0
+    if office.has_machine_with_model_name?(model_name)
       return nil
     end
     
@@ -44,14 +48,16 @@ class Machine < ActiveRecord::Base
     end
     
     
-    past_component = self.components.where(:name => component_name.upcase ).first
+    past_component = self.components.where(:name => component_name.upcase, :is_active => true ).first
     if not past_component.nil?
       return past_component
     end
     
     self.components.create(:name => component_name.upcase, 
       :creator_id => employee.id , 
-      :component_category_id => component_category.id)
+      :component_category_id => component_category.id,
+      :office_id => employee.active_job_attachment.office_id )
+      
     
   end
   
@@ -72,6 +78,29 @@ class Machine < ActiveRecord::Base
                   :machine_id => self.id, :creator_id => employee.id )
     end
     
+  end
+  
+  
+  def update_details(new_machine_model_name, employee)
+    if not employee.has_role?(:machine_builder)
+      return nil
+    end
+    
+    if new_machine_model_name.nil? or new_machine_model_name.length == 0 
+      return nil
+    end
+    
+    employee_office= employee.active_job_attachment.office
+    if self.office_id != employee_office.id
+      return nil
+    end
+    
+    if employee_office.has_machine_with_model_name?(new_machine_model_name)
+      return nil
+    end
+    
+    self.model_name = new_machine_model_name.upcase
+    self.save
   end
   
   

@@ -1,5 +1,5 @@
 <tr id="spare_part_compatibility_assignment-<%= spare_part.id %>">
-  <td class="part_code"><%= spare_part.part_code  %></td>
+  <td class="part_code header_text"><%= spare_part.part_code  %></td>
   <td class="price"><%= print_money( spare_part.active_price.amount ) %></td>
   <td>
     <% if component.is_compatible_with?(spare_part) %>
@@ -18,6 +18,9 @@
           :id => "provider_#{component.id}-consumer_#{spare_part.id}" %> Compatible
     </label>
   </td>
-  <td><%= link_to "Edit", component_spare_part_url(component, spare_part ) , :class => "modal_trigger" %></td>
-  <td>Delete</td>
+  <td><%= link_to "Edit", component_spare_part_url(component, spare_part ) , :class => "btn btn-warning modal_trigger" %></td>
+  <td>
+    <a href="#" class="btn btn-danger propose action"
+      id="finalize-<%= spare_part.id %>">Delete</a>
+  </td>
 </tr>

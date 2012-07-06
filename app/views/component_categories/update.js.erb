@@ -1,0 +1,26 @@
+$(document).ready(function(){
+  // update the modal
+  
+  <% if @result.nil? %>
+    <% new_row = escape_javascript(  render :partial => "component_categories/fail_to_update", :locals => {
+              :price => @price,
+              :part_code => @part_code
+            }) %>
+  <% else %>
+    <% new_row = escape_javascript(  render :partial => "component_categories/update_successful", :locals => {
+              :price => @price,
+              :part_code => @part_code
+            }) %>
+  <% end %>
+  
+  $("#modal_notification").replaceWith('<%= new_row %>').show();
+  $("#edit_form").hide();
+  
+  
+  // update the display data
+  <% new_row = escape_javascript( render :partial => "component_categories/component_category_entry", :locals => {
+    :component_category => @component_category
+  }) %>
+  
+  $("#component_category-<%= @component_category.id %>").replaceWith('<%= new_row %>');
+});

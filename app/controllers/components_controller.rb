@@ -33,17 +33,38 @@ class ComponentsController < ApplicationController
     
   end
   
+  
+  def update
+    @machine = Machine.find_by_id params[:machine_id]
+    @component = Component.find_by_id params[:id]
+    
+    @new_component_name = params[:new_component_name]
+    @result = @component.update_details(@new_component_name , current_user)
+    
+  end
+  
 =begin
   Creating spare part
 =end
   def select_component_to_create_and_assign_spare_part
     @machine = Machine.find_by_id params[:machine_id]
-    @components = @machine.components 
+    @components = @machine.active_components 
     
     add_breadcrumb "Select Machine", 'select_machine_to_create_and_assign_spare_part_url'
     set_breadcrumb_for @machine, 'select_component_to_create_and_assign_spare_part_url' + "(#{@machine.id})", 
                 "Select Component"
                 
     render :file => 'components/spare_parts/select_component_to_create_and_assign_spare_part'
+  end
+  
+=begin
+  Destroy Spare Part 
+=end
+
+  def execute_destroy_component
+    @component = Component.find_by_id(params[:entity_id])
+    
+    @component.deactivate( current_user ) 
+    
   end
 end

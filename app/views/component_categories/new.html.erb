@@ -62,12 +62,10 @@
         </thead>
         <tbody>
           <% current_office.component_categories.each do |component_category| %>
-            <tr>
-              <td><%= component_category.name  %></td>
-              <td><%= component_category.components.count %></td>
-              <td><%= component_category.active_spare_parts.count %></td>
-              <td><button href="#" class="btn">Delete</button></td>
-            </tr>
+            <%= render :partial => "component_categories/component_category_entry", :locals => {
+              :component_category => component_category
+            }%>
+            
           <% end %>
 
         </tbody>
@@ -80,6 +78,63 @@
 
 
 
+
+
+
+<div class="modal" id="myModal" style="display:none;">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <div id="modal_notification" style="display:none;">
+    </div>
+    <%= form_tag  root_url,  :method => :put, :id=> "edit_form", 
+          :class => " edit_model", :style =>"display:none;"  do  %>
+          
+          
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr><th colspan="2" style="text-align:center;">Data</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <b>Category Name</b>
+            </td>
+            <td>
+              <div class="input-append">
+                
+                <textarea rows="5" name="new_component_category_name" id="new_component_category_name" 
+                    cols="40" class="text optional input-xlarge"></textarea>
+                
+              </div>
+              
+            </td>
+          </tr>
+          
+       
+          
+          <tr>
+            <td colspan="2" style="text-align:center;">
+              <button href="#" class="btn btn-primary" id="pay_backlog_and_save_balance">
+                Update Component Category
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+     
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn modal-closer">Close</a>
+    <!-- <a href="#" class="btn btn-primary">Save changes</a> -->
+  </div>
+</div>
 
 
 
