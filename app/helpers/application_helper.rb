@@ -176,16 +176,20 @@ module ApplicationHelper
     :header_title => "Manager",
     :processes => [
       {
-        :title => "Create Employee",
-        :destination_link => "root_url",
+        :title => "Add Employee",
+        :destination_link => "new_employee_creation_url",
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'offices',
+            :action => 'new_employee_creation'
           },
           {
-            :controller => "",
-            :action => ''
+            :controller => "offices",
+            :action => 'create_employee'
+          },
+          {
+            :controller => 'offices',
+            :action => 'show_role_for_employee'
           }
         ]
       },

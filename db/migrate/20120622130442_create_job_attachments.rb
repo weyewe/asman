@@ -4,6 +4,8 @@ class CreateJobAttachments < ActiveRecord::Migration
       t.integer :office_id 
       t.integer :user_id
       t.boolean :is_active , :default => false
+      
+      t.boolean :is_deleted, :default => false 
       t.timestamps
     end
   end

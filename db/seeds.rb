@@ -18,7 +18,7 @@ dikarunia_office = Office.create :name => "Dikarunia"
 
 
 puts "creating user"
-manager = dikarunia_office.create_user( [manager_role], 
+manager = dikarunia_office.create_main_user( [manager_role], 
                   :email => 'manager@gmail.com',
                   :password => 'willy1234',
                   :password_confirmation => 'willy1234'  )

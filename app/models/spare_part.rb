@@ -56,7 +56,22 @@ class SparePart < ActiveRecord::Base
     if price_amount.nil?
       return nil
     end
+    old_price = self.active_price 
+    
     self.prices.create( :amount => price_amount , :creator_id => employee.id )
+    #  update all prices in the unfinished maintenance 
+    
+    
+    new_price = self.active_price
+    
+    
+    ComponentStatus.find_all_for_unfinished_maintenance( old_price ) .each do |component_status|
+      component_status.price_id = new_price.id
+      component_status.save 
+    end
+    
+    
+    
   end
   
   def active_price

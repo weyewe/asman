@@ -2,6 +2,7 @@ class ComponentStatus < ActiveRecord::Base
   attr_accessible :maintenance_id , :component_id 
   belongs_to :maintenance
   belongs_to :component
+  belongs_to :price_id 
   
   def mark_as_ok( employee) 
     if self.maintenance.is_finalized == true
@@ -69,6 +70,17 @@ class ComponentStatus < ActiveRecord::Base
     end
     
     self.replacement_spare_part_id = spare_part.id 
+    self.price_id = spare_part.active_price.id
     self.save
   end
+  
+=begin
+  Update price on spare part update
+=end
+  def ComponentStatus.find_all_for_unfinished_maintenance( old_price )
+    ComponentStatus.joins(:maintenance).where(
+    :price_id => old_price.id  , :maintenance => {:is_finalized => false}) 
+  end
+
+
 end

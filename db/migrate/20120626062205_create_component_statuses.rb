@@ -9,6 +9,8 @@ class CreateComponentStatuses < ActiveRecord::Migration
       t.integer :replacement_spare_part_id 
       
       t.integer :creator_id 
+      
+      t.integer :price_id 
 
       t.timestamps
     end

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   layout :layout_by_resource
-  helper_method :current_office 
+  helper_method :current_office , :deduce_after_sign_in_url
   
   def layout_by_resource
     if devise_controller? && resource_name == :user && action_name == 'new'
@@ -26,10 +26,9 @@ class ApplicationController < ActionController::Base
   end
   
   
-  def after_sign_in_path_for(resource)
-    active_job_attachment  = current_user.active_job_attachment 
+  def deduce_after_sign_in_url
     if current_user.has_role?( :manager )
-      return new_group_loan_product_url
+      return new_employee_creation_url
     end
     
     if current_user.has_role?(:machine_builder )
@@ -43,8 +42,10 @@ class ApplicationController < ActionController::Base
     if current_user.has_role?(:data_entry )
       return select_unfinalized_maintenance_to_be_done_url  
     end
-   
-    
+  end
+  
+  def after_sign_in_path_for(resource)
+    return deduce_after_sign_in_url 
   end
   
   

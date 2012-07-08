@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.text     "description"
     t.integer  "replacement_spare_part_id"
     t.integer  "creator_id"
+    t.integer  "price_id"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
     t.integer  "office_id"
     t.integer  "user_id"
     t.boolean  "is_active",  :default => false
+    t.boolean  "is_deleted", :default => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end
@@ -126,8 +128,9 @@ ActiveRecord::Schema.define(:version => 20120627070513) do
 
   create_table "offices", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "main_user_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "prices", :force => true do |t|

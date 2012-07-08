@@ -4,6 +4,8 @@ class Price < ActiveRecord::Base
   after_create :toggle_active_price
   belongs_to :spare_part 
   
+  has_many :component_statuses
+  
   
   def toggle_active_price
     spare_part = self.spare_part 

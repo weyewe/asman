@@ -1,0 +1,217 @@
+
+<div class="span9 content">
+  <%= create_guide("Create Employee", 
+        "Office: <b>#{current_office.name}</b>" + "<br />"   +
+        "Total Employee: <b>#{@employees.count}</b>" ).html_safe %>
+  
+  <%#= create_breadcrumb(@breadcrumbs).html_safe %>
+ 
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Well done!</strong> <%= flash[:notice].html_safe %>
+    </div>
+  <% end %>
+  
+  <% if flash[:error] %>
+    <div class="alert alert-error">
+      <a data-dismiss="alert" class="close">×</a>
+      <strong>Create Failure!</strong> Please fill in all fields.<br />
+      <% flash[:error].each do |error| %>
+        <%= error.html_safe %>
+      <% end %>
+      
+    </div>
+  <% end %>
+  
+  
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>New Employee</h2><br />
+
+      <%= simple_form_for( @new_employee, :url => create_employee_url,
+        :html => {:class => 'form-horizontal prevent_double_submit' }) do |f| %>
+
+        <%= f.input :email , :input_html => {:class => "input-xlarge span5"}, 
+        :label => "Email" %>
+        
+        
+       
+        
+
+        <div class="form-actions">
+          <%= f.button :submit , :class => "btn btn-primary", :text=> "Create Employee" %>
+        </div>
+      <% end %>
+    </div> 
+  </div><!--/row-->
+  <hr />
+
+  <div class="row-fluid">
+    <div id="data_list">
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Manager</th>
+            <th>Account Manager</th>
+            <th>Cashier</th>
+            <th>Machine Builder</th>
+            <th>Technician</th>
+            <th>Data Entry</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @employees.each do |employee| %>
+          <tr>
+            <td>
+              <%= link_to employee.email , show_role_for_employee_url(employee) %>
+            </td>
+            <td>
+              <% if employee.has_role?(:manager)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+            <td>
+              <% if employee.has_role?(:account_manager)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+            <td>
+              <% if employee.has_role?(:cashier)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+            <td>
+              <% if employee.has_role?(:machine_builder)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+            
+            <td>
+              <% if employee.has_role?(:technician)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+            <td>
+              <% if employee.has_role?(:data_entry)%>
+                <span class="label label-success">Yes</span>
+              <% else %>
+                <span class="label">No</span>
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+
+        </tbody>
+      </table>
+    </div><!-- end of #data_list -->
+  </div>
+
+</div><!--/span-->
+
+
+<div class=" hidden" id="approve_propose_form_wrapper">
+  <%= form_for Component.new, :url => execute_destroy_spare_part_url   do |f| %>
+    <%= hidden_field_tag 'entity_id' , ''  %>
+    <%= hidden_field_tag 'action_role', '' %>
+    <%= hidden_field_tag 'action_value', '' %>
+  <% end %>
+</div>
+
+
+<div class=" hidden" id="checkbox_form_wrapper">
+  <%= form_for Compatibility.new, :url => compatibilities_url, :method => :post   do |f| %>
+    <%= hidden_field_tag 'membership_provider' , ''  %>
+    <%= hidden_field_tag 'membership_consumer', '' %>
+    <%= hidden_field_tag 'membership_decision', '' %>
+  <% end %>
+</div>
+
+
+
+
+
+<div class="modal" id="myModal" style="display:none;">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <div id="modal_notification" style="display:none;">
+    </div>
+    <%= form_tag  root_url,  :method => :put, :id=> "edit_form", 
+          :class => " edit_model", :style =>"display:none;"  do  %>
+          
+          
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr><th colspan="2" style="text-align:center;">Data</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <b>Part Code</b>
+            </td>
+            <td>
+              <div class="input-append">
+                <input class="string  input-xlarge span5"
+                  id="current_part_code" name="part_code" />
+              </div>
+              
+            </td>
+          </tr>
+          
+          <tr>
+            <td>
+              <b>Price</b>
+            </td>
+            <td>
+              <div class="input-append">
+                <input class="string optional input-xlarge span5"
+                  id="current_price" name="price" />
+              </div>
+              
+            </td>
+          </tr>
+          
+          <tr>
+            <td colspan="2" style="text-align:center;">
+              <button href="#" class="btn btn-primary" id="pay_backlog_and_save_balance">
+                Update Spare Part
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      
+     
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn modal-closer">Close</a>
+    <!-- <a href="#" class="btn btn-primary">Save changes</a> -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
