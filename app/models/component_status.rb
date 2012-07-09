@@ -2,7 +2,7 @@ class ComponentStatus < ActiveRecord::Base
   attr_accessible :maintenance_id , :component_id 
   belongs_to :maintenance
   belongs_to :component
-  belongs_to :price_id 
+  belongs_to :price 
   
   def mark_as_ok( employee) 
     if self.maintenance.is_finalized == true

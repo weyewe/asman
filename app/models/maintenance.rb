@@ -61,6 +61,10 @@ class Maintenance < ActiveRecord::Base
       return self
     end
     
+    if self.is_finalized == false
+      return nil
+    end
+    
     self.is_paid = true
     self.payment_approver_id = employee.id
     self.payment_datetime = DateTime.now 

@@ -38,13 +38,29 @@
           <tr>
             <th>Component</th>
             <th>Replacement Spare Part</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
-          <% @maintenance.broken_components.order("created_at DESC").each do |broken_component| %>
+          <% @maintenance.broken_components.
+                order("created_at DESC").each do |broken_component| %>
             <tr>
               <td><%= broken_component.component.name  %></td>
-              <td><%= broken_component.replacement_spare_part.part_code  %></td>
+              
+              <td>
+                <% if not broken_component.replacement_spare_part.nil? %>
+                  <%= broken_component.replacement_spare_part.part_code  %>
+                <% else %>
+                  <span class="label label-important">Not Yet Assigned</span>
+                <% end %>
+              </td>
+              <td>
+                <% if not broken_component.price.nil? %>
+                  <%= print_money broken_component.price.amount %>
+                <% else %>
+                  <span class="label label-important">Not Yet Assigned</span>
+                <% end %>
+              </td>
             </tr>
           <% end %>
 

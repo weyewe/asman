@@ -62,6 +62,11 @@ class MaintenancesController < ApplicationController
     @client = @asset.client 
     @component_statuses= @maintenance.component_statuses.includes(:component).order("created_at ASC")
     
+    add_breadcrumb "Select Maintenace", 'select_unfinalized_maintenance_to_be_done_url'
+    set_breadcrumb_for @maintenance, 'component_status_data_entry_for_maintenance_url' + "(#{@maintenance.id})", 
+                "Maintenance"
+                
+                
     render :file => "maintenances/component_statuses/component_status_data_entry_for_maintenance"
   end
   

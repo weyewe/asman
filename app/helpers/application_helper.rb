@@ -192,21 +192,7 @@ module ApplicationHelper
             :action => 'show_role_for_employee'
           }
         ]
-      },
-      {
-        :title => "Assign Role",
-        :destination_link => "root_url",
-        :conditions => [
-          {
-            :controller => '',
-            :action => ''
-          },
-          {
-            :controller => "",
-            :action => ''
-          }
-        ]
-      }
+      } 
     ]
   }
   
